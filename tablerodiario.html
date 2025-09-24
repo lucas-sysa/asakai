@@ -85,6 +85,12 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   // UNIDADES RETENIDAS PISO
   if (nombreStr === "UNIDADES RETENIDAS PISO") {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
+  }
+
+  // UNIDADES RETENIDAS MASIVA
+  if (nombreStr === "UNIDADES RETENIDAS MASIVA") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
     return valorNum > objNum ? "#fcb6b6" : "#b6fcb6"; // rojo si > OBJ, verde si ≤ OBJ
   }
 
