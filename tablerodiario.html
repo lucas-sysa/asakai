@@ -1,174 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tablero Diario</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f4f4f4;
-      text-align: center;
-    }
-
-    .logo {
-      max-width: 250px;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    #fecha-hora {
-      font-size: 18px;
-      font-weight: bold;
-      color: #444;
-      margin-bottom: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    th, td {
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      text-align: center;
-    }
-
-    th {
-      background: #048c7c;
-      color: white;
-      font-weight: bold;
-    }
-
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-
-    tr:hover {
-      background: #e3f2fd;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablero Diario</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; text-align: center; }
+.logo { max-width: 250px; margin-bottom: 10px; }
+h1 { margin-bottom: 10px; color: #333; }
+#fecha-hora { font-size: 18px; font-weight: bold; color: #444; margin-bottom: 20px; }
+table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: center; }
+th { background: #048c7c; color: white; font-weight: bold; }
+tr:nth-child(even) { background: #f9f9f9; }
+tr:hover { background: #e3f2fd; }
+</style>
 </head>
 <body>
-  <img src="logo.png" alt="Logo de la empresa" class="logo">
-  <h1>ASAKAI - TABLERO DIARIO</h1>
 
-  <div id="fecha-hora"></div>
+<img src="logo.png" alt="Logo de la empresa" class="logo">
+<h1>ASAKAI - TABLERO DIARIO</h1>
+<div id="fecha-hora"></div>
 
-  <table id="tabla-datos">
-    <thead></thead>
-    <tbody></tbody>
-  </table>
+<table id="tabla-datos">
+  <thead></thead>
+  <tbody></tbody>
+</table>
 
-  <script>
-    const endpoint = "https://script.google.com/macros/s/AKfycbyTM54acGdDlCC7tnze729wtPBlpxxPtpcN5-pT3IzpyBDgM1_Gjtt608jCJYOyLUM4/exec";
+<script>
+const endpoint = "https://script.google.com/macros/s/AKfycbyTM54acGdDlCC7tnze729wtPBlpxxPtpcN5-pT3IzpyBDgM1_Gjtt608jCJYOyLUM4/exec";
 
-    // 🔹 Reloj en tiempo real
-    function actualizarReloj() {
-      const ahora = new Date();
-      const opciones = { 
-        weekday: "long", year: "numeric", month: "long", 
-        day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" 
-      };
-      document.getElementById("fecha-hora").textContent = 
-        ahora.toLocaleDateString("es-ES", opciones);
-    }
-    setInterval(actualizarReloj, 1000);
-    actualizarReloj();
+// 🔹 Reloj en tiempo real
+function actualizarReloj() {
+  const ahora = new Date();
+  const opciones = { weekday: "long", year: "numeric", month: "long", 
+                     day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" };
+  document.getElementById("fecha-hora").textContent = ahora.toLocaleDateString("es-ES", opciones);
+}
+setInterval(actualizarReloj, 1000);
+actualizarReloj();
 
-    // 🔹 Función para decidir color según fila y objetivo
-    function colorSegunObjetivo(nombreFila, objetivo, valor) {
-      if (!nombreFila || valor === undefined || valor === null) return "";
+// 🔹 Función para decidir color según fila y objetivo
+function colorSegunObjetivo(nombreFila, objetivo, valor) {
+  if (!nombreFila || valor === undefined || valor === null) return "";
+  const nombreStr = String(nombreFila).trim().toUpperCase();
 
-      const nombreStr = String(nombreFila).trim().toUpperCase();
+  // Limpiar valor y objetivo
+  const valorNum = Number(String(valor).replace("%","").trim().replace(",","."));
+  const objNum = Number(String(objetivo).replace(/[^0-9.]/g,"").trim().replace(",","."));
 
-      // Limpiar valor y objetivo
-      const valorNum = Number(String(valor).replace("%","").trim().replace(",","."));
-      const objNum = Number(String(objetivo).replace("%","").trim().replace(",","."));
+  console.log("Fila:", nombreStr, "Valor:", valorNum, "OBJ:", objNum); // depuración
 
-      if (isNaN(valorNum)) return "";
+  if (isNaN(valorNum)) return "";
 
-      // ACCIDENTES y RECLAMOS CLIENTE (RED)
-      if (["ACCIDENTES","RECLAMOS CLIENTE (RED)"].includes(nombreStr)) {
-        return valorNum === 0 ? "#b6fcb6" : "#fcb6b6";
-      }
+  // ACCIDENTES y RECLAMOS CLIENTE (RED)
+  if (["ACCIDENTES","RECLAMOS CLIENTE (RED)"].includes(nombreStr)) {
+    return valorNum === 0 ? "#b6fcb6" : "#fcb6b6";
+  }
 
-      // BUENO DIRECTO
-      if (nombreStr === "BUENO DIRECTO") {
-        if (isNaN(objNum)) return "";
-        return valorNum > objNum ? "#b6fcb6" : "#fcb6b6";
-      }
+  // BUENO DIRECTO
+  if (nombreStr === "BUENO DIRECTO") {
+    if (isNaN(objNum)) return "";
+    return valorNum > objNum ? "#b6fcb6" : "#fcb6b6";
+  }
 
-      // Regla general: >= OBJ → verde, < OBJ → rojo
-      if (!isNaN(objNum)) {
-        return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6";
-      }
+  // Regla general
+  if (!isNaN(objNum)) {
+    return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6";
+  }
 
-      return "";
-    }
+  return "";
+}
 
-    // 🔹 Cargar datos del Google Sheet
-    async function cargarDatos() {
-      try {
-        const res = await fetch(endpoint);
-        const data = await res.json();
+// 🔹 Cargar datos del Google Sheet
+async function cargarDatos() {
+  try {
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    if (!data || data.length === 0) return;
 
-        if (!data || data.length === 0) return;
+    const tabla = document.getElementById("tabla-datos");
+    const thead = tabla.querySelector("thead");
+    const tbody = tabla.querySelector("tbody");
 
-        const tabla = document.getElementById("tabla-datos");
-        const thead = tabla.querySelector("thead");
-        const tbody = tabla.querySelector("tbody");
+    const columnas = Object.keys(data[0]);
+    thead.innerHTML = "<tr>" + columnas.map(h => `<th>${h}</th>`).join("") + "</tr>";
 
-        // Crear cabecera
-        const columnas = Object.keys(data[0]);
-        thead.innerHTML = "<tr>" + columnas.map(h => `<th>${h}</th>`).join("") + "</tr>";
+    const colNombreFila = columnas.find(c => c.toUpperCase().includes("INDICADOR")) || columnas[0];
+    const colObjetivo = columnas.find(c => c.toUpperCase() === "OBJ") || columnas[1];
 
-        // Detectar columna de nombre de fila automáticamente
-        const colNombreFila = columnas.find(c => c.toUpperCase().includes("INDICADOR")) || columnas[0];
-        const colObjetivo = columnas.find(c => c.toUpperCase() === "OBJ") || columnas[1];
+    // Columnas de días
+    const columnasDias = columnas.filter(c => ["LUN","MAR","MIE","JUE","VIE"].includes(c.toUpperCase()));
 
-        // Crear filas con colores
-        tbody.innerHTML = data.map(r => {
-          let fila = "<tr>";
-          const nombreFila = r[colNombreFila];
-          const objetivo = r[colObjetivo];
+    tbody.innerHTML = data.map(r => {
+      let fila = "<tr>";
+      const nombreFila = r[colNombreFila];
+      const objetivo = r[colObjetivo];
 
-          columnas.forEach(col => {
-            let valor = r[col];
-            let celda = `<td>${valor}</td>`;
+      columnas.forEach(col => {
+        let valor = r[col];
+        let color = "";
 
-            // Colorear todas las columnas excepto OBJ y columna de nombre de fila
-            if (col !== colNombreFila && col !== colObjetivo) {
-              const color = colorSegunObjetivo(nombreFila, objetivo, valor);
-              celda = `<td style="background-color: ${color}">${valor}</td>`;
-            }
+        // Aplicar color solo a columnas de días
+        if (columnasDias.includes(col)) {
+          color = colorSegunObjetivo(nombreFila, objetivo, valor);
+        }
 
-            fila += celda;
-          });
+        fila += `<td style="background-color:${color}">${valor}</td>`;
+      });
 
-          fila += "</tr>";
-          return fila;
-        }).join("");
+      fila += "</tr>";
+      return fila;
+    }).join("");
 
-      } catch (err) {
-        console.error("Error cargando datos:", err);
-      }
-    }
+  } catch (err) {
+    console.error("Error cargando datos:", err);
+  }
+}
 
-    // Cargar al inicio
-    cargarDatos();
+// Cargar al inicio
+cargarDatos();
 
-    // Actualizar cada 10 minutos
-    setInterval(cargarDatos, 600000);
+// Actualizar cada 10 minutos
+setInterval(cargarDatos, 600000);
+</script>
 
-  </script>
 </body>
 </html>
