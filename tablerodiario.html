@@ -76,6 +76,12 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
     return valorNum < 150 ? "#b6fcb6" : "#fcb6b6";
   }
 
+  // PARADAS DE LÍNEA POR LOGÍSTICA (nuevo criterio: rojo si > OBJ, verde si ≤ OBJ)
+  if (nombreStr === "PARADAS DE LÍNEA POR LOGÍSTICA") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6"; // rojo si > OBJ, verde si ≤ OBJ
+  }
+
   // Regla general
   if (!isNaN(objNum)) {
     return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6";
