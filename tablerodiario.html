@@ -13,13 +13,20 @@
     }
 
     .logo {
-      max-width: 250px; /* ajustá el tamaño */
+      max-width: 250px;
       margin-bottom: 10px;
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #333;
+    }
+
+    #fecha-hora {
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 20px;
     }
 
     table {
@@ -51,18 +58,36 @@
   </style>
 </head>
 <body>
-  <!-- 👇 Logo arriba del título -->
+  <!-- Logo -->
   <img src="logo.png" alt="Logo de la empresa" class="logo">
   <h1>ASAKAI - TABLERO DIARIO</h1>
 
+  <!-- Reloj en tiempo real -->
+  <div id="fecha-hora"></div>
+
+  <!-- Tabla -->
   <table id="tabla-datos">
     <thead></thead>
     <tbody></tbody>
   </table>
 
   <script>
-    const endpoint = "https://script.google.com/macros/s/AKfycbyTM54acGdDlCC7tnze729wtPBlpxxPtpcN5-pT3IzpyBDgM1_Gjtt608jCJYOyLUM4/exec"; // pegá tu link acá
+    const endpoint = "https://script.google.com/macros/s/AKfycbyTM54acGdDlCC7tnze729wtPBlpxxPtpcN5-pT3IzpyBDgM1_Gjtt608jCJYOyLUM4/exec"; 
 
+    // 🔹 Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      const opciones = { 
+        weekday: "long", year: "numeric", month: "long", 
+        day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" 
+      };
+      document.getElementById("fecha-hora").textContent = 
+        ahora.toLocaleDateString("es-ES", opciones);
+    }
+    setInterval(actualizarReloj, 1000); // cada 1 seg
+    actualizarReloj();
+
+    // 🔹 Cargar datos del Google Sheet
     async function cargarDatos() {
       try {
         const res = await fetch(endpoint);
@@ -85,7 +110,11 @@
       }
     }
 
+    // Cargar al inicio
     cargarDatos();
+
+    // 🔹 Refrescar datos cada 10 minutos (600000 ms)
+    setInterval(cargarDatos, 600000);
   </script>
 </body>
 </html>
