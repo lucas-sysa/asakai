@@ -67,7 +67,13 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   // PARADAS DE LÍNEA
   if (nombreStr === "PARADAS DE LÍNEA") {
     if (isNaN(valorNum)) return "";
-    return valorNum < 150 ? "#b6fcb6" : "#fcb6b6"; // verde si <150, rojo si >=150
+    return valorNum < 150 ? "#b6fcb6" : "#fcb6b6";
+  }
+
+  // PARADAS DE LÍNEA POR MP
+  if (nombreStr === "PARADAS DE LÍNEA POR MP") {
+    if (isNaN(valorNum)) return "";
+    return valorNum < 150 ? "#b6fcb6" : "#fcb6b6";
   }
 
   // Regla general
