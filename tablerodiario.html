@@ -18,7 +18,7 @@ tr:hover { background: #e3f2fd; }
 </head>
 <body>
 
-<img src="logo.png" alt="Logo de la empresa" class="logo">
+<img src="Logo.png" alt="Logo de la empresa" class="logo">
 <h1>ASAKAI - TABLERO DIARIO</h1>
 <div id="fecha-hora"></div>
 
@@ -62,6 +62,12 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   if (nombreStr === "BUENO DIRECTO") {
     if (isNaN(objNum)) return "";
     return valorNum > objNum ? "#b6fcb6" : "#fcb6b6";
+  }
+
+  // PARADAS DE LÍNEA
+  if (nombreStr === "PARADAS DE LÍNEA") {
+    if (isNaN(valorNum)) return "";
+    return valorNum < 150 ? "#b6fcb6" : "#fcb6b6"; // verde si <150, rojo si >=150
   }
 
   // Regla general
