@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="logo-container">
-    <img src="Logo.png" alt="Logo de la empresa" class="logo">
+    <img src="logo.png" alt="Logo de la empresa" class="logo">
   </div>
 
   <h1>S - SEGURIDAD</h1>
@@ -39,15 +39,15 @@
   <div class="dashboard">
     <div class="dashboard-item">
       <h3>Jornadas SIN Accidentes</h3>
-      <p id="sinAccidentes">0</p>
+      <p id="sinAccidentes" class="numero-dashboard">0</p>
     </div>
     <div class="dashboard-item">
       <h3>ACCIDENTES</h3>
-      <p id="totalAccidentes">0</p>
+      <p id="totalAccidentes" class="numero-dashboard">0</p>
     </div>
     <div class="dashboard-item">
       <h3>INCIDENTES</h3>
-      <p id="totalIncidentes">0</p>
+      <p id="totalIncidentes" class="numero-dashboard">0</p>
     </div>
     <div class="dashboard-item chart-container">
       <h3>Distribución por TIPO</h3>
@@ -80,7 +80,7 @@
   <canvas id="historialChart" width="400" height="200"></canvas>
 
   <!-- Tabla completa (oculta) -->
-  <div class="table-container">
+  <div class="table-container" style="display:none;">
     <table id="historialTable">
       <thead>
         <tr>
