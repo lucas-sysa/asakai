@@ -129,7 +129,8 @@ tr:nth-child(even) {
 }
 
 .logo {
-  max-width: 150px; /* ajusta el tamaño según necesites */
+  max-width: 50px; /* ajusta el tamaño según necesites */
   height: auto;
 }
+
 
