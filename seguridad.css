@@ -57,11 +57,10 @@ h1, h2 {
 }
 
 .dashboard-item p {
-  font-size: 100 px;  /* aumentar el tamaño de los números */
+  font-size: 100px; /* números más grandes */
   font-weight: bold;
   margin: 0;
 }
-
 
 /* Chart container */
 .chart-container {
@@ -73,11 +72,13 @@ h1, h2 {
   height: auto;
 }
 
-/* Tabla de comentarios */
+/* Tabla de comentarios a ancho completo */
 .comentarios-table {
   overflow-x: auto;
-  margin: 20px auto;
-  max-width: 900px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .comentarios-table table {
@@ -99,20 +100,25 @@ h1, h2 {
   color: white;
 }
 
-/* Tabla principal */
-table {
+/* Tabla principal (oculta) */
+.table-container {
+  overflow-x: auto;
+  margin-top: 30px;
   width: 100%;
-  border-collapse: collapse;
-  background: #fff;
+  box-sizing: border-box;
 }
 
-th, td {
-  padding: 10px;
-  border: 1px solid #ccc;
+#historialTable {
+  display: none; /* oculta la tabla */
+}
+
+#historialTable, #historialTable th, #historialTable td {
+  width: 100%;
+  border-collapse: collapse;
   text-align: center;
 }
 
-thead {
+#historialTable thead {
   background-color: #007BFF;
   color: white;
 }
@@ -127,12 +133,6 @@ tr:nth-child(even) {
 }
 
 .logo {
-  max-width: 250px; /* ajusta el tamaño según necesites */
+  max-width: 170px;
   height: auto;
 }
-
-/* Ocultar tabla principal de historial y su contenedor, pero mantenerla en el DOM */
-.table-container {
-  display: none;
-}
-
