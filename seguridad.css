@@ -57,9 +57,11 @@ h1, h2 {
 }
 
 .dashboard-item p {
-  font-size: 28px;
+  font-size: 40px;  /* aumentar el tamaño de los números */
   font-weight: bold;
+  margin: 0;
 }
+
 
 /* Chart container */
 .chart-container {
@@ -74,10 +76,8 @@ h1, h2 {
 /* Tabla de comentarios */
 .comentarios-table {
   overflow-x: auto;
-  margin: 20px 0;   /* márgenes arriba y abajo, sin centrar */
-  max-width: 100%;  /* ocupar todo el ancho disponible */
-  width: 100%;      /* asegurar ancho total */
-  box-sizing: border-box; /* incluye padding y border en el ancho */
+  margin: 20px auto;
+  max-width: 900px;
 }
 
 .comentarios-table table {
@@ -135,4 +135,3 @@ tr:nth-child(even) {
 .table-container {
   display: none;
 }
-
