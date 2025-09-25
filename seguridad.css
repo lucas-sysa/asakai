@@ -1,46 +1,39 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Arial, sans-serif;
   padding: 20px;
-  background-color: #f4f6f9;
-  color: #333;
+  background-color: #f4f4f4;
 }
 
 h1, h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #222;
 }
 
 .filters {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .filters select, .filters button {
-  padding: 6px 12px;
+  padding: 6px 10px;
   margin: 0 5px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fff;
-  font-size: 14px;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.filters button {
-  background-color: #007BFF;
-  color: white;
-  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: white;
+  transition: all 0.2s;
 }
 
 .filters button:hover {
-  background-color: #0056b3;
+  background: #007BFF;
+  color: white;
 }
 
 /* Dashboard */
 .dashboard {
   display: flex;
   justify-content: space-around;
+  align-items: stretch;
   margin-bottom: 30px;
   text-align: center;
   gap: 20px;
@@ -50,106 +43,76 @@ h1, h2 {
 .dashboard-item {
   background: #fff;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  width: 160px;
-  transition: transform 0.2s;
-}
-
-.dashboard-item:hover {
-  transform: translateY(-3px);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 200px;
+  flex: 1;
+  min-width: 160px;
 }
 
 .dashboard-item h3 {
   margin-bottom: 10px;
   color: #007BFF;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .dashboard-item p {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
-  color: #333;
 }
 
-/* Gráfico de torta + comentarios */
-.dashboard-torta {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-  justify-content: center;
+/* Chart container */
+.chart-container {
+  max-width: 300px;
 }
 
-#bajaChart {
-  width: 230px !important;
-  height: 230px !important;
-  background: #fff;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+.chart-container canvas {
+  max-width: 100%;
+  height: auto;
 }
 
+/* Tabla de comentarios */
 .comentarios-table {
-  max-height: 230px;
-  overflow-y: auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  flex: 1;
-  min-width: 350px;
+  overflow-x: auto;
+  margin: 20px auto;
+  max-width: 900px;
 }
 
 .comentarios-table table {
-  border-collapse: collapse;
   width: 100%;
-  border-radius: 12px;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .comentarios-table th, .comentarios-table td {
-  padding: 8px 10px;
-  font-size: 13px;
-  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
 }
 
-.comentarios-table th {
+.comentarios-table thead {
   background-color: #007BFF;
   color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.comentarios-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.comentarios-table tr:hover {
-  background-color: #f1f7ff;
 }
 
 /* Tabla principal */
 .table-container {
   overflow-x: auto;
   margin-top: 30px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  padding: 10px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
 }
 
 th, td {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ccc;
   text-align: center;
-  font-size: 14px;
 }
 
 thead {
@@ -158,9 +121,14 @@ thead {
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f2f2f2;
+}
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-tr:hover {
-  background-color: #f1f7ff;
+.logo {
+  max-width: 250px; /* ajusta el tamaño según necesites */
+  height: auto;
 }
