@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de Accidentes</title>
+  <link rel="stylesheet" href="seguridad.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Historial de Accidentes</h1>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <label for="daySelect">Día:</label>
+    <select id="daySelect">
+      <option value="">Todos</option>
+    </select>
+
+    <label for="monthSelect">Mes:</label>
+    <select id="monthSelect">
+      <option value="">Todos</option>
+    </select>
+
+    <label for="yearSelect">Año:</label>
+    <select id="yearSelect">
+      <option value="">Todos</option>
+    </select>
+
+    <button id="filterBtn">Filtrar</button>
+    <button id="resetBtn">Restablecer</button>
+  </div>
+
+  <!-- Dashboard con gráfico de torta integrado -->
+  <div class="dashboard">
+    <div class="dashboard-item">
+      <h3>Jornadas SIN Accidentes</h3>
+      <p id="sinAccidentes">0</p>
+    </div>
+    <div class="dashboard-item">
+      <h3>ACCIDENTES</h3>
+      <p id="totalAccidentes">0</p>
+    </div>
+    <div class="dashboard-item">
+      <h3>INCIDENTES</h3>
+      <p id="totalIncidentes">0</p>
+    </div>
+    <div class="dashboard-item chart-container">
+      <h3>Distribución por TIPO</h3>
+      <canvas id="bajaChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Tabla de comentarios -->
+  <h2>Comentarios sobre Accidentes e Incidentes</h2>
+  <div class="comentarios-table">
+    <table id="comentariosTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Comentarios 1</th>
+          <th>Comentarios 2</th>
+          <th>Fecha</th>
+          <th>Accidentes</th>
+          <th>Incidentes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Se llena desde JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gráfico de barras -->
+  <h2>Historial de Accidentes e Incidentes</h2>
+  <canvas id="historialChart" width="400" height="200"></canvas>
+
+  <!-- Tabla completa -->
+  <div class="table-container">
+    <table id="historialTable">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Accidentes</th>
+          <th>Incidentes</th>
+          <th>TIPO DE ACCIDENTE</th>
+          <th>Dias Sin Accidentes</th>
+          <th>Record</th>
+          <th>Comentarios 1</th>
+          <th>Comentarios 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Datos desde Google Sheet -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="seguridad.js"></script>
+</body>
+</html>
+
