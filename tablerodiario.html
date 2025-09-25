@@ -14,6 +14,8 @@ th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: center; }
 th { background: #048c7c; color: white; font-weight: bold; }
 tr:nth-child(even) { background: #f9f9f9; }
 tr:hover { background: #e3f2fd; }
+#historial { margin-top: 20px; }
+#selector-semana { padding: 5px; font-size: 16px; margin-top: 5px; }
 </style>
 </head>
 <body>
@@ -26,6 +28,14 @@ tr:hover { background: #e3f2fd; }
   <thead></thead>
   <tbody></tbody>
 </table>
+
+<!-- Historial Semanal -->
+<div id="historial" style="margin-top:20px; display:flex; align-items:center; justify-content:center; gap:10px;">
+  <span><strong>Historial Semanal:</strong></span>
+  <select id="selector-semana"></select>
+</div>
+
+</div>
 
 <script>
 const endpoint = "https://script.google.com/macros/s/AKfycbyTM54acGdDlCC7tnze729wtPBlpxxPtpcN5-pT3IzpyBDgM1_Gjtt608jCJYOyLUM4/exec";
@@ -40,7 +50,7 @@ function actualizarReloj() {
 setInterval(actualizarReloj, 1000);
 actualizarReloj();
 
-// 🔹 Función para decidir color según fila y objetivo
+// 🔹 Función de colores (toda tu lógica actual se mantiene)
 function colorSegunObjetivo(nombreFila, objetivo, valor) {
   if (!nombreFila || valor === undefined || valor === null) return "";
   const nombreStr = String(nombreFila).trim().toUpperCase();
@@ -73,9 +83,10 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
     return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
   }
 
+  // 🔹 REPARADAS/RETENIDAS invertida
   if (nombreStr === "REPARADAS/RETENIDAS") {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
-    return valorNum > objNum ? "#b6fcb6" : "#fcb6b6"; // invertido
+    return valorNum < objNum ? "#fcb6b6" : "#b6fcb6";
   }
 
   if (["CUMPLIMIENTO PLAN DESPACHO","RELACIÓN DESPACHADO VS PRODUCIDO"].includes(nombreStr)) {
@@ -83,7 +94,6 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
     return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6"; 
   }
 
-  // 🔹 AUSENTISMO: Real, Gestionable y Te/Tr
   if (["AUSENTISMO REAL","AUSENTISMO GESTIONABLE","TE/TR"].includes(nombreStr)) {
     if (!objetivo) return "";
     let objValue = parseFloat(objetivo.replace("<","").replace(">","").replace(",",".").trim());
@@ -112,41 +122,77 @@ async function cargarDatos() {
     const data = await res.json();
     if (!data || data.length === 0) return;
 
-    const tabla = document.getElementById("tabla-datos");
-    const thead = tabla.querySelector("thead");
-    const tbody = tabla.querySelector("tbody");
+    // Guardar datos en LocalStorage por semana
+    const semana = (new Date()).toISOString().slice(0,10);
+    let historial = JSON.parse(localStorage.getItem("historialTablero") || "{}");
+    historial[semana] = data;
+    localStorage.setItem("historialTablero", JSON.stringify(historial));
 
-    const columnas = Object.keys(data[0]);
-    thead.innerHTML = "<tr>" + columnas.map(h => `<th>${h}</th>`).join("") + "</tr>";
+    // Actualizar selector de semanas
+    actualizarSelectorSemana(historial);
 
-    const colNombreFila = "INDICADORES";  
-    const colObjetivo = "OBJ";             
-    const columnasDias = ["LUN","MAR","MIE","JUE","VIE"];  
-
-    tbody.innerHTML = data.map(r => {
-      let fila = "<tr>";
-      const nombreFila = r[colNombreFila];
-      const objetivo = r[colObjetivo];
-
-      columnas.forEach(col => {
-        let valor = r[col];
-        let color = "";
-
-        if (columnasDias.includes(col)) {
-          color = colorSegunObjetivo(nombreFila, objetivo, valor);
-        }
-
-        fila += `<td style="background-color:${color}">${valor}</td>`;
-      });
-
-      fila += "</tr>";
-      return fila;
-    }).join("");
-
+    // Mostrar datos de la semana actual
+    mostrarTabla(data);
   } catch (err) {
     console.error("Error cargando datos:", err);
   }
 }
+
+// 🔹 Mostrar tabla
+function mostrarTabla(data) {
+  const tabla = document.getElementById("tabla-datos");
+  const thead = tabla.querySelector("thead");
+  const tbody = tabla.querySelector("tbody");
+
+  const columnas = Object.keys(data[0]);
+  thead.innerHTML = "<tr>" + columnas.map(h => `<th>${h}</th>`).join("") + "</tr>";
+
+  const colNombreFila = "INDICADORES";  
+  const colObjetivo = "OBJ";             
+  const columnasDias = ["LUN","MAR","MIE","JUE","VIE"];  
+
+  tbody.innerHTML = data.map(r => {
+    let fila = "<tr>";
+    const nombreFila = r[colNombreFila];
+    const objetivo = r[colObjetivo];
+
+    columnas.forEach(col => {
+      let valor = r[col];
+      let color = "";
+
+      if (columnasDias.includes(col)) {
+        color = colorSegunObjetivo(nombreFila, objetivo, valor);
+      }
+
+      fila += `<td style="background-color:${color}">${valor}</td>`;
+    });
+
+    fila += "</tr>";
+    return fila;
+  }).join("");
+}
+
+// 🔹 Actualizar selector de semanas
+function actualizarSelectorSemana(historial) {
+  const selector = document.getElementById("selector-semana");
+  selector.innerHTML = "";
+  const semanas = Object.keys(historial).sort();
+  semanas.forEach(s => {
+    const option = document.createElement("option");
+    option.value = s;
+    option.textContent = s;
+    selector.appendChild(option);
+  });
+}
+
+// 🔹 Cambio de semana
+document.getElementById("selector-semana").addEventListener("change", function() {
+  const semana = this.value;
+  const historial = JSON.parse(localStorage.getItem("historialTablero") || "{}");
+  if (historial[semana]) {
+    mostrarTabla(historial[semana]);
+  }
+});
 
 // Cargar al inicio
 cargarDatos();
