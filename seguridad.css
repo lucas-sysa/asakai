@@ -125,11 +125,11 @@ tr:nth-child(even) {
 }
 
 .logo {
-  max-width: 150px; /* ajusta el tamaño según necesites */
+  max-width: 250px; /* ajusta el tamaño según necesites */
   height: auto;
 }
 
-/* Ocultar contenedor completo de la tabla principal */
+/* Ocultar tabla principal de historial y su contenedor, pero mantenerla en el DOM */
 .table-container {
   display: none;
 }
