@@ -62,7 +62,7 @@ h1, h2 {
 }
 
 .dashboard-item p {
-  font-size: 100px; /* números más grandes */
+  font-size: 200px; /* números más grandes */
   font-weight: bold;
   margin: 0;
 }
@@ -141,4 +141,5 @@ tr:nth-child(even) {
   max-width: 250px;
   height: auto;
 }
+
 
