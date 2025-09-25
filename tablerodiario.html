@@ -18,7 +18,7 @@ tr:hover { background: #e3f2fd; }
 </head>
 <body>
 
-<img src="Logo.png" alt="Logo de la empresa" class="logo">
+<img src="logo.png" alt="Logo de la empresa" class="logo">
 <h1>ASAKAI - TABLERO DIARIO</h1>
 <div id="fecha-hora"></div>
 
@@ -48,8 +48,6 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   // Limpiar valor y objetivo
   const valorNum = Number(String(valor).replace("%","").trim().replace(",","."));
   const objNum = Number(String(objetivo).replace(/[^0-9.]/g,"").trim().replace(",","."));
-
-  console.log("Fila:", nombreStr, "Valor:", valorNum, "OBJ:", objNum); // depuración
 
   if (isNaN(valorNum)) return "";
 
@@ -91,7 +89,31 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   // UNIDADES RETENIDAS MASIVA
   if (nombreStr === "UNIDADES RETENIDAS MASIVA") {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
-    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6"; // rojo si > OBJ, verde si ≤ OBJ
+    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
+  }
+
+  // REPARADAS/RETENIDAS
+  if (nombreStr === "REPARADAS/RETENIDAS") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
+  }
+
+  // CUMPLIMIENTO PLAN DESPACHO
+  if (nombreStr === "CUMPLIMIENTO PLAN DESPACHO") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6"; 
+  }
+
+  // RELACIÓN DESPACHADO VS PRODUCIDO
+  if (nombreStr === "RELACIÓN DESPACHADO VS PRODUCIDO") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6"; 
+  }
+
+  // AUSENTISMO REAL
+  if (nombreStr === "AUSENTISMO REAL") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum <= objNum ? "#b6fcb6" : "#fcb6b6"; 
   }
 
   // Regla general
@@ -119,7 +141,6 @@ async function cargarDatos() {
     const colNombreFila = columnas.find(c => c.toUpperCase().includes("INDICADOR")) || columnas[0];
     const colObjetivo = columnas.find(c => c.toUpperCase() === "OBJ") || columnas[1];
 
-    // Columnas de días
     const columnasDias = columnas.filter(c => ["LUN","MAR","MIE","JUE","VIE"].includes(c.toUpperCase()));
 
     tbody.innerHTML = data.map(r => {
@@ -131,7 +152,6 @@ async function cargarDatos() {
         let valor = r[col];
         let color = "";
 
-        // Aplicar color solo a columnas de días
         if (columnasDias.includes(col)) {
           color = colorSegunObjetivo(nombreFila, objetivo, valor);
         }
@@ -151,7 +171,7 @@ async function cargarDatos() {
 // Cargar al inicio
 cargarDatos();
 
-// Actualizar cada 10 minutos
+// Refrescar cada 10 minutos
 setInterval(cargarDatos, 600000);
 </script>
 
