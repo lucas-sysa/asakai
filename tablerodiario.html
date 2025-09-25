@@ -68,9 +68,14 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
     return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
   }
 
-  if (["UNIDADES RETENIDAS PISO","UNIDADES RETENIDAS MASIVA","REPARADAS/RETENIDAS"].includes(nombreStr)) {
+  if (["UNIDADES RETENIDAS PISO","UNIDADES RETENIDAS MASIVA"].includes(nombreStr)) {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
     return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
+  }
+
+  if (nombreStr === "REPARADAS/RETENIDAS") {
+    if (isNaN(valorNum) || isNaN(objNum)) return "";
+    return valorNum > objNum ? "#b6fcb6" : "#fcb6b6"; // invertido
   }
 
   if (["CUMPLIMIENTO PLAN DESPACHO","RELACIÓN DESPACHADO VS PRODUCIDO"].includes(nombreStr)) {
