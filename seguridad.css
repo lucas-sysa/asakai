@@ -74,8 +74,10 @@ h1, h2 {
 /* Tabla de comentarios */
 .comentarios-table {
   overflow-x: auto;
-  margin: 20px auto;
-  max-width: 900px;
+  margin: 20px 0;   /* márgenes arriba y abajo, sin centrar */
+  max-width: 100%;  /* ocupar todo el ancho disponible */
+  width: 100%;      /* asegurar ancho total */
+  box-sizing: border-box; /* incluye padding y border en el ancho */
 }
 
 .comentarios-table table {
@@ -133,3 +135,4 @@ tr:nth-child(even) {
 .table-container {
   display: none;
 }
+
