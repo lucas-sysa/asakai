@@ -45,78 +45,45 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   if (!nombreFila || valor === undefined || valor === null) return "";
   const nombreStr = String(nombreFila).trim().toUpperCase();
 
-  // Limpiar valor y objetivo
-  const valorNum = Number(String(valor).replace("%","").trim().replace(",","."));
+  const valorNum = Number(String(valor).replace("%","").trim().replace(",",".")); 
   const objNum = Number(String(objetivo).replace(/[^0-9.]/g,"").trim().replace(",","."));
 
   if (isNaN(valorNum)) return "";
 
-  // ACCIDENTES y RECLAMOS CLIENTE (RED)
   if (["ACCIDENTES","RECLAMOS CLIENTE (RED)"].includes(nombreStr)) {
     return valorNum === 0 ? "#b6fcb6" : "#fcb6b6";
   }
 
-  // BUENO DIRECTO
   if (nombreStr === "BUENO DIRECTO") {
     if (isNaN(objNum)) return "";
     return valorNum > objNum ? "#b6fcb6" : "#fcb6b6";
   }
 
-  // PARADAS DE LÍNEA
-  if (nombreStr === "PARADAS DE LÍNEA") {
-    if (isNaN(valorNum)) return "";
+  if (["PARADAS DE LÍNEA","PARADAS DE LÍNEA POR MP"].includes(nombreStr)) {
     return valorNum < 150 ? "#b6fcb6" : "#fcb6b6";
   }
 
-  // PARADAS DE LÍNEA POR MP
-  if (nombreStr === "PARADAS DE LÍNEA POR MP") {
-    if (isNaN(valorNum)) return "";
-    return valorNum < 150 ? "#b6fcb6" : "#fcb6b6";
-  }
-
-  // PARADAS DE LÍNEA POR LOGÍSTICA
   if (nombreStr === "PARADAS DE LÍNEA POR LOGÍSTICA") {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
     return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
   }
 
-  // UNIDADES RETENIDAS PISO
-  if (nombreStr === "UNIDADES RETENIDAS PISO") {
+  if (["UNIDADES RETENIDAS PISO","UNIDADES RETENIDAS MASIVA","REPARADAS/RETENIDAS"].includes(nombreStr)) {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
     return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
   }
 
-  // UNIDADES RETENIDAS MASIVA
-  if (nombreStr === "UNIDADES RETENIDAS MASIVA") {
-    if (isNaN(valorNum) || isNaN(objNum)) return "";
-    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
-  }
-
-  // REPARADAS/RETENIDAS
-  if (nombreStr === "REPARADAS/RETENIDAS") {
-    if (isNaN(valorNum) || isNaN(objNum)) return "";
-    return valorNum > objNum ? "#fcb6b6" : "#b6fcb6";
-  }
-
-  // CUMPLIMIENTO PLAN DESPACHO
-  if (nombreStr === "CUMPLIMIENTO PLAN DESPACHO") {
+  if (["CUMPLIMIENTO PLAN DESPACHO","RELACIÓN DESPACHADO VS PRODUCIDO"].includes(nombreStr)) {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
     return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6"; 
   }
 
-  // RELACIÓN DESPACHADO VS PRODUCIDO
-  if (nombreStr === "RELACIÓN DESPACHADO VS PRODUCIDO") {
-    if (isNaN(valorNum) || isNaN(objNum)) return "";
-    return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6"; 
-  }
-
-  // AUSENTISMO REAL
-  if (nombreStr === "AUSENTISMO REAL") {
+  // 🔹 NUEVO: AUSENTISMO REAL, AUSENTISMO GESTIONABLE y Te/Tr
+  if (["AUSENTISMO REAL", "AUSENTISMO GESTIONABLE", "TE/TR"].includes(nombreStr)) {
     if (isNaN(valorNum) || isNaN(objNum)) return "";
     return valorNum <= objNum ? "#b6fcb6" : "#fcb6b6"; 
   }
 
-  // Regla general
   if (!isNaN(objNum)) {
     return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6";
   }
@@ -129,8 +96,6 @@ async function cargarDatos() {
   try {
     const res = await fetch(endpoint);
     const data = await res.json();
-    console.log(data); // 👉 Probá primero si llega
-
     if (!data || data.length === 0) return;
 
     const tabla = document.getElementById("tabla-datos");
@@ -140,10 +105,9 @@ async function cargarDatos() {
     const columnas = Object.keys(data[0]);
     thead.innerHTML = "<tr>" + columnas.map(h => `<th>${h}</th>`).join("") + "</tr>";
 
-    const colNombreFila = columnas.find(c => c.toUpperCase().includes("INDICADOR")) || columnas[0];
-    const colObjetivo = columnas.find(c => c.toUpperCase() === "OBJ") || columnas[1];
-
-    const columnasDias = columnas.filter(c => ["LUN","MAR","MIE","JUE","VIE"].includes(c.toUpperCase()));
+    const colNombreFila = "INDICADORES";  
+    const colObjetivo = "OBJ";             
+    const columnasDias = ["LUN","MAR","MIE","JUE","VIE"];  
 
     tbody.innerHTML = data.map(r => {
       let fila = "<tr>";
@@ -170,8 +134,6 @@ async function cargarDatos() {
   }
 }
 
-
-
 // Cargar al inicio
 cargarDatos();
 
@@ -181,5 +143,3 @@ setInterval(cargarDatos, 600000);
 
 </body>
 </html>
-
-
