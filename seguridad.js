@@ -93,11 +93,13 @@ function actualizarDashboard(data) {
   document.getElementById('totalAccidentes').textContent = totalAccidentes;
   document.getElementById('totalIncidentes').textContent = totalIncidentes;
 
-  // Gráfico de torta por TIPO DE ACCIDENTE
+  // Gráfico de torta por TIPO DE ACCIDENTE, sin "Desconocido"
   const tipoCounts = {};
   data.forEach(d => {
-    const tipo = d['TIPO DE ACCIDENTE'] || 'Desconocido';
-    tipoCounts[tipo] = (tipoCounts[tipo] || 0) + Number(d.Accidentes);
+    const tipo = d['TIPO DE ACCIDENTE'];
+    if(tipo) { // solo si tiene valor
+      tipoCounts[tipo] = (tipoCounts[tipo] || 0) + Number(d.Accidentes);
+    }
   });
 
   const labels = Object.keys(tipoCounts);
