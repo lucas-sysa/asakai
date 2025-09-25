@@ -46,7 +46,7 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
   const nombreStr = String(nombreFila).trim().toUpperCase();
 
   const valorNum = Number(String(valor).replace("%","").trim().replace(",",".")); 
-  const objNum = Number(String(objetivo).replace(/[^0-9.]/g,"").trim().replace(",","."));
+  const objNum = Number(String(objetivo).replace(/[^0-9.]/g,"").trim().replace(",",".")); 
 
   if (isNaN(valorNum)) return "";
 
@@ -78,10 +78,19 @@ function colorSegunObjetivo(nombreFila, objetivo, valor) {
     return valorNum >= objNum ? "#b6fcb6" : "#fcb6b6"; 
   }
 
-  // 🔹 NUEVO: AUSENTISMO REAL, AUSENTISMO GESTIONABLE y Te/Tr
-  if (["AUSENTISMO REAL", "AUSENTISMO GESTIONABLE", "TE/TR"].includes(nombreStr)) {
-    if (isNaN(valorNum) || isNaN(objNum)) return "";
-    return valorNum <= objNum ? "#b6fcb6" : "#fcb6b6"; 
+  // 🔹 AUSENTISMO: Real, Gestionable y Te/Tr
+  if (["AUSENTISMO REAL","AUSENTISMO GESTIONABLE","TE/TR"].includes(nombreStr)) {
+    if (!objetivo) return "";
+    let objValue = parseFloat(objetivo.replace("<","").replace(">","").replace(",",".").trim());
+    if (isNaN(objValue)) return "";
+
+    if (objetivo.includes("<")) {
+      return valorNum < objValue ? "#b6fcb6" : "#fcb6b6";
+    } else if (objetivo.includes(">")) {
+      return valorNum > objValue ? "#b6fcb6" : "#fcb6b6";
+    } else {
+      return valorNum <= objValue ? "#b6fcb6" : "#fcb6b6";
+    }
   }
 
   if (!isNaN(objNum)) {
