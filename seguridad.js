@@ -77,7 +77,13 @@ function crearGrafico(data) {
     options: {
       responsive: true,
       scales: {
-        y: { beginAtZero: true }
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1,   // Fuerza números enteros
+            precision: 0   // Evita decimales
+          }
+        }
       }
     }
   });
@@ -205,3 +211,4 @@ resetBtn.addEventListener('click', () => {
 // Inicializar
 cargarSelects();
 cargarDatos();
+
