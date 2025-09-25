@@ -48,6 +48,11 @@ h1, h2 {
   width: 200px;
   flex: 1;
   min-width: 160px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra verticalmente */
+  align-items: center;     /* centra horizontalmente */
 }
 
 .dashboard-item h3 {
@@ -57,7 +62,7 @@ h1, h2 {
 }
 
 .dashboard-item p {
-  font-size: 100px; /* números más grandes */
+  font-size: 50px; /* números más grandes */
   font-weight: bold;
   margin: 0;
 }
@@ -109,7 +114,7 @@ h1, h2 {
 }
 
 #historialTable {
-  display: none; /* oculta la tabla */
+  display: none; /* oculta la tabla principal */
 }
 
 #historialTable, #historialTable th, #historialTable td {
@@ -133,6 +138,6 @@ tr:nth-child(even) {
 }
 
 .logo {
-  max-width: 170px;
+  max-width: 250px;
   height: auto;
 }
