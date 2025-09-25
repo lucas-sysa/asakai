@@ -124,7 +124,7 @@ h1, h2 {
 }
 
 #historialTable thead {
-  background-color: #007BFF;
+  background-color: #048c7c;
   color: white;
 }
 
@@ -141,6 +141,7 @@ tr:nth-child(even) {
   max-width: 250px;
   height: auto;
 }
+
 
 
 
