@@ -25,7 +25,7 @@ h1, h2 {
 }
 
 .filters button:hover {
-  background: #007BFF;
+  background: #048c7c;
   color: white;
 }
 
@@ -57,7 +57,7 @@ h1, h2 {
 
 .dashboard-item h3 {
   margin-bottom: 10px;
-  color: #007BFF;
+  color: #048c7c;
   font-size: 16px;
 }
 
@@ -101,7 +101,7 @@ h1, h2 {
 }
 
 .comentarios-table thead {
-  background-color: #007BFF;
+  background-color: #048c7c;
   color: white;
 }
 
@@ -141,5 +141,6 @@ tr:nth-child(even) {
   max-width: 250px;
   height: auto;
 }
+
 
 
