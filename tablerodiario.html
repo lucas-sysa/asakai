@@ -129,6 +129,8 @@ async function cargarDatos() {
   try {
     const res = await fetch(endpoint);
     const data = await res.json();
+    console.log(data); // 👉 Probá primero si llega
+
     if (!data || data.length === 0) return;
 
     const tabla = document.getElementById("tabla-datos");
@@ -168,6 +170,8 @@ async function cargarDatos() {
   }
 }
 
+
+
 // Cargar al inicio
 cargarDatos();
 
@@ -177,3 +181,4 @@ setInterval(cargarDatos, 600000);
 
 </body>
 </html>
+
