@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q - CALIDAD</title>
+<link rel="stylesheet" href="calidad.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="logo-container">
+  <img src="logo.png" alt="Logo Empresa" class="logo">
+</div>
+
+<h1>Q - CALIDAD</h1>
+
+<!-- Filtros -->
+<div class="filters">
+  <label for="daySelect">Día:</label>
+  <select id="daySelect"><option value="">Todos</option></select>
+
+  <label for="monthSelect">Mes:</label>
+  <select id="monthSelect"><option value="">Todos</option></select>
+
+  <label for="yearSelect">Año:</label>
+  <select id="yearSelect"><option value="">Todos</option></select>
+
+  <button id="filterBtn">Filtrar</button>
+  <button id="resetBtn">Restablecer</button>
+</div>
+
+<!-- Dashboard de totales -->
+<div class="dashboard">
+  <div class="dashboard-item">
+    <h3>Total Reclamos</h3>
+    <p id="totalReclamos" class="numero-dashboard">0</p>
+  </div>
+  <div class="dashboard-item">
+    <h3>Retenidas Totales</h3>
+    <p id="totalRetenidas" class="numero-dashboard">0</p>
+  </div>
+  <div class="dashboard-item chart-container">
+    <h3>Reclamos con/sin riesgo</h3>
+    <canvas id="riesgoChart"></canvas>
+  </div>
+</div>
+
+<!-- Gráficos de barras -->
+<div class="charts">
+  <div class="chart-item">
+    <h3>Reclamos de Clientes</h3>
+    <canvas id="reclamosChart"></canvas>
+  </div>
+  <div class="chart-item">
+    <h3>% Bueno Directo Diario</h3>
+    <canvas id="buenoDirectoChart"></canvas>
+  </div>
+  <div class="chart-item">
+    <h3>Retenciones Masivas</h3>
+    <canvas id="retencionesMasivasChart"></canvas>
+  </div>
+  <div class="chart-item">
+    <h3>Unidades Retenidas</h3>
+    <canvas id="unidadesRetenidasChart"></canvas>
+  </div>
+  <div class="chart-item">
+    <h3>Reclamos por Marca</h3>
+    <canvas id="marcasChart"></canvas>
+  </div>
+</div>
+
+<!-- Tablas ocultas -->
+<div class="comentarios-table" style="display:none;">
+  <table id="comentariosTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Comentarios 1</th>
+        <th>Comentarios 2</th>
+        <th>Fecha</th>
+        <th>Reclamos</th>
+        <th>Marca</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="table-container" style="display:none;">
+  <table id="historialTable">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Reclamos de Clientes</th>
+        <th>MARCA</th>
+        <th>Comentarios_Reclamo1</th>
+        <th>Comentarios_Reclamo2</th>
+        <th>% de Bueno Directo Diario</th>
+        <th>Cantidad de Unidades RETENIDAS PISO</th>
+        <th>Cantidad de Retenciones MASIVAS</th>
+        <th>RETENIDAS TOTALES</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script src="calidad.js"></script>
+</body>
+</html>
+

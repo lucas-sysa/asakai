@@ -1,0 +1,104 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+h1, h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.filters {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filters select, .filters button {
+  padding: 6px 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filters button:hover {
+  background: #007BFF;
+  color: white;
+}
+
+/* Dashboard */
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 200px;
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-item p {
+  font-size: 150px; /* números más grandes */
+  font-weight: bold;
+  margin: 0;
+}
+
+.numero-dashboard {
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Chart containers */
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.chart-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 400px;
+  max-width: 90%;
+}
+
+.chart-item canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Logo */
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.logo {
+  max-width: 250px;
+  height: auto;
+}
+
+/* Tablas ocultas */
+.comentarios-table,
+.table-container {
+  display: none;
+}
