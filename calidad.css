@@ -53,7 +53,7 @@ h1, h3 {
 }
 
 .dashboard-item p {
-  font-size: 150px; /* números más grandes */
+  font-size: 130px; /* números más grandes */
   font-weight: bold;
   margin: 0;
 }
@@ -102,3 +102,4 @@ h1, h3 {
 .table-container {
   display: none;
 }
+
