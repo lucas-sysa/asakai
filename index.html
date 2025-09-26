@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>- La Emilia - ASAKAI -</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .logo {
+    width: 500px; /* Ajusta el tamaño del logo */
+    margin-bottom: 40px;
+  }
+
+  .button-container {
+    display: grid;
+    grid-template-columns: repeat(5, 150px); /* 5 botones por fila */
+    gap: 20px;
+    justify-content: center;
+  }
+
+  button {
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #048c7c;
+    color: white;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #046d62;
+  }
+</style>
+</head>
+<body>
+
+  <img src="fondo.png" alt="Logo" class="logo">
+
+  <div class="button-container">
+    <button onclick="window.location.href='tablerodiario.html'">Tablero Diario</button>
+    <button onclick="window.location.href='seguridad.html'">S-Seguridad</button>
+    <button onclick="window.location.href='calidad.html'">Q-Calidad</button>
+    <button onclick="alert('Botón 4')">Botón 4</button>
+    <button onclick="alert('Botón 5')">Botón 5</button>
+    <button onclick="alert('Botón 6')">Botón 6</button>
+    <button onclick="alert('Botón 7')">Botón 7</button>
+    <button onclick="alert('Botón 8')">Botón 8</button>
+    <button onclick="alert('Botón 9')">Botón 9</button>
+    <button onclick="alert('Botón 10')">Botón 10</button>
+  </div>
+
+</body>
+</html>
