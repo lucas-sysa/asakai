@@ -11,20 +11,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
   .logo {
-    width: 500px; /* Ajusta el tamaño del logo */
-    margin-bottom: 40px;
+    width: 100%;
+    max-width: 500px; /* tamaño máximo en desktop */
+    height: auto;
+    margin-bottom: 30px;
   }
 
   .button-container {
     display: grid;
-    grid-template-columns: repeat(5, 150px); /* 5 botones por fila */
-    gap: 20px;
-    justify-content: center;
+    grid-template-columns: repeat(5, 1fr); /* 5 botones por fila en desktop */
+    gap: 15px;
+    width: 100%;
+    max-width: 900px;
   }
 
   button {
@@ -36,10 +41,40 @@
     background-color: #048c7c;
     color: white;
     transition: background-color 0.3s;
+    width: 100%;
   }
 
   button:hover {
     background-color: #046d62;
+  }
+
+  /* Ajustes para tablet */
+  @media (max-width: 900px) {
+    .button-container {
+      grid-template-columns: repeat(3, 1fr); /* 3 botones por fila */
+    }
+  }
+
+  /* Ajustes para celular */
+  @media (max-width: 600px) {
+    .button-container {
+      grid-template-columns: repeat(2, 1fr); /* 2 botones por fila */
+      gap: 10px;
+    }
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .button-container {
+      grid-template-columns: 1fr; /* 1 botón por fila */
+    }
+    .logo {
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
   }
 </style>
 </head>
