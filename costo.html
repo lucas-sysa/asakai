@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Costo</title>
+<link rel="stylesheet" href="costo.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="logo-container">
+  <img src="logo.png" alt="Logo Empresa" class="logo">
+</div>
+
+<h1>Dashboard de Costo</h1>
+
+<div class="filters">
+  <label for="daySelect">Día:</label>
+  <select id="daySelect"><option value="">Todos</option></select>
+
+  <label for="monthSelect">Mes:</label>
+  <select id="monthSelect"><option value="">Todos</option></select>
+
+  <label for="yearSelect">Año:</label>
+  <select id="yearSelect"><option value="">Todos</option></select>
+
+  <button id="filterBtn">Filtrar</button>
+  <button id="resetBtn">Restablecer</button>
+</div>
+
+<div class="dashboard">
+  <div class="dashboard-item">
+    <h3>Total Minutos Paradas</h3>
+    <p id="totalMinParadas">0</p>
+  </div>
+  <div class="dashboard-item">
+    <h3>Total Paradas Línea</h3>
+    <p id="totalParadasLinea">0</p>
+  </div>
+  <div class="dashboard-item">
+    <h3>Última Parada</h3>
+    <p id="ultimaParadaLinea">0</p>
+  </div>
+</div>
+
+<div class="charts">
+  <div class="chart-item">
+    <h3>Paradas de Línea</h3>
+    <canvas id="paradasLineaChart"></canvas>
+  </div>
+  <div class="chart-item">
+    <h3>Por Materia Prima</h3>
+    <canvas id="materiaPrimaChart"></canvas>
+  </div>
+  <div class="chart-item">
+    <h3>Por Logística</h3>
+    <canvas id="logisticaChart"></canvas>
+  </div>
+</div>
+
+<div class="table-container">
+  <table id="historialTable">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Cantidad de Min Paradas de Línea</th>
+        <th>Comentarios Relevantes Línea</th>
+        <th>Total Paradas Línea</th>
+        <th>Última Parada Línea</th>
+        <th>Materia Prima</th>
+        <th>Comentarios Materia Prima</th>
+        <th>Logística</th>
+        <th>Comentarios Logística</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script src="costo.js"></script>
+</body>
+</html>
+
+
