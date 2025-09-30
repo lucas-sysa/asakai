@@ -95,24 +95,30 @@ function llenarTabla(tbody, data, columnas){
   });
 }
 
-// Actualizar dashboard de indicadores
+// Actualizar dashboard de indicadores (con filtros)
 function actualizarDashboard() {
   dashboardContainer.innerHTML = '';
 
-  const totalMinutos = allData.paradas.reduce((sum,d)=>sum + Number(d['Cantidad de Min Paradas de Línea'] || 0),0);
-  const totalParadas = allData.paradas.length;
-  const ultimaParada = allData.paradas.length > 0 ? allData.paradas[allData.paradas.length-1]['Fecha'].split('T')[0] : 'N/A';
+  // Datos filtrados según fecha
+  const paradasFiltradas = filtrarPorFecha(allData.paradas);
+  const materiaPrimaFiltrada = filtrarPorFecha(allData.materiaPrima);
+  const logisticaFiltrada = filtrarPorFecha(allData.logistica);
+
+  // Paradas de línea
+  const totalMinutos = paradasFiltradas.reduce((sum,d)=>sum + Number(d['Cantidad de Min Paradas de Línea'] || 0),0);
+  const totalParadas = paradasFiltradas.length;
+  const ultimaParada = paradasFiltradas.length > 0 ? paradasFiltradas[paradasFiltradas.length-1]['Fecha'].split('T')[0] : 'N/A';
 
   dashboardContainer.appendChild(crearItemDashboard('Paradas de Línea - Total Minutos', totalMinutos));
   dashboardContainer.appendChild(crearItemDashboard('Paradas de Línea - Total Paradas', totalParadas));
   dashboardContainer.appendChild(crearItemDashboard('Última Parada de Línea', ultimaParada));
 
   // Por Materia Prima
-  const totalMateriaPrima = allData.materiaPrima.filter(d => d['Comentarios Relevantes']).length;
+  const totalMateriaPrima = materiaPrimaFiltrada.filter(d => d['Comentarios Relevantes']).length;
   dashboardContainer.appendChild(crearItemDashboard('Por Materia Prima - Comentarios Relevantes', totalMateriaPrima));
 
-  // Por Logistica
-  const totalLogistica = allData.logistica.filter(d => d['Comentarios Relevantes']).length;
+  // Por Logística
+  const totalLogistica = logisticaFiltrada.filter(d => d['Comentarios Relevantes']).length;
   dashboardContainer.appendChild(crearItemDashboard('Por Logística - Comentarios Relevantes', totalLogistica));
 }
 
@@ -135,10 +141,8 @@ function crearGraficos(){
 
 function crearBarChart(container, titulo, data, valorKey){
   const canvas = document.createElement('canvas');
-
-  // ancho y alto fijo
-  canvas.width = 1000;  // ancho
-  canvas.height = 300; // alto
+  canvas.width = 1000;  // ancho fijo
+  canvas.height = 300;  // alto fijo
   container.appendChild(canvas);
 
   const labels = data.map(d => d.Fecha.split('T')[0].split('-')[2]);
@@ -220,13 +224,16 @@ function mostrarComentarios() {
 filterBtn.addEventListener('click', ()=>{
   mostrarDatos();
   mostrarComentarios();
+  actualizarDashboard(); // 🔹 recalcular totales con filtro
 });
+
 resetBtn.addEventListener('click', ()=>{
   daySelect.value = '';
   monthSelect.value = '';
   yearSelect.value = '';
   mostrarDatos();
   mostrarComentarios();
+  actualizarDashboard(); // 🔹 recalcular al resetear
 });
 
 // Inicializar
