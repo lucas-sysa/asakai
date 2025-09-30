@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C - COSTOS</title>
-<link rel="stylesheet" href="costos.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Paradas y Logística</title>
+  <link rel="stylesheet" href="costos.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="logo-container">
-    <img src="Logo.png" alt="Logo de la empresa" class="logo">
+    <img src="logo.png" alt="Logo de la empresa" class="logo">
   </div>
 
   <h1>C - COSTOS</h1>
@@ -33,11 +32,15 @@
   <!-- Dashboard -->
   <div id="dashboard-section">
     <div id="dashboard-container" class="dashboard"></div>
-    <div id="charts-container"></div>
-    <div id="comentarios-container"></div>
   </div>
 
-  <!-- Tablas ocultas para uso interno -->
+  <!-- Gráficos -->
+  <div id="charts-container"></div>
+
+  <!-- Comentarios -->
+  <div id="comentarios-container"></div>
+
+  <!-- Tablas ocultas -->
   <div class="table-container">
     <table id="paradasTable">
       <thead>
