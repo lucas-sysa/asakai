@@ -1,53 +1,136 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f9;
+  padding: 20px;
+  background-color: #f4f4f4;
   margin: 0;
-  padding: 20px;
 }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-h1, h2 {
+h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-canvas {
-  width: 100% !important;
-  height: 400px !important;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
+/* Filtros */
+.filters {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-th {
-  background: #007bff;
+.filters select, .filters button {
+  padding: 6px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: white;
+  transition: all 0.2s;
+}
+
+.filters button:hover {
+  background: #007BFF;
   color: white;
 }
 
+/* Dashboard */
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  margin-bottom: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.dashboard-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 200px;
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-item h3 {
+  margin-bottom: 10px;
+  color: #007BFF;
+  font-size: 16px;
+}
+
+.dashboard-item p {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Charts - uno debajo del otro */
+#charts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+#charts-container canvas {
+  width: 1000px;
+  height: 300px;
+}
+
+/* Contenedor de comentarios */
+#comentarios-container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto 50px auto;
+}
+
+.comentario-section {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fefefe;
+}
+
+.comentario-section h3 {
+  background: #007BFF;
+  color: white;
+  padding: 8px 15px;
+  margin: 0;
+  font-size: 16px;
+}
+
+.comentario-card {
+  background: #fff;
+  padding: 10px 15px;
+  margin: 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.comentario-card strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Ocultar tablas internas */
+.table-container {
+  display: none;
+}
+
+/* Logo */
 .logo-container {
   text-align: center;
   margin-bottom: 15px;
 }
 
 .logo {
-  max-width: 250px;
+  max-width: 150px; /* ajustado para que no quede grande */
   height: auto;
 }
-
