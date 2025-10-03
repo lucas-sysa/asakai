@@ -40,3 +40,14 @@ th {
   background: #007bff;
   color: white;
 }
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.logo {
+  max-width: 250px;
+  height: auto;
+}
+
