@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P - PERSONAS</title>
+  <link rel="stylesheet" href="costos.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.png" alt="Logo de la empresa" class="logo">
+  </div>
+
+  <h1>P - PERSONAS</h1>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <label for="daySelect">Día:</label>
+    <select id="daySelect"><option value="">Todos</option></select>
+
+    <label for="monthSelect">Mes:</label>
+    <select id="monthSelect"><option value="">Todos</option></select>
+
+    <label for="yearSelect">Año:</label>
+    <select id="yearSelect"><option value="">Todos</option></select>
+
+    <button id="filterBtn">Filtrar</button>
+    <button id="resetBtn">Restablecer</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard-section">
+    <div id="dashboard-container" class="dashboard">
+      <div class="dashboard-item">
+        <h3>Total Personas</h3>
+        <p id="totalPersonas">0</p>
+      </div>
+      <div class="dashboard-item">
+        <h3>Gestionables</h3>
+        <p id="totalGestionable">0</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div id="charts-container">
+    <canvas id="ausentismoChart"></canvas>
+  </div>
+
+  <!-- Comentarios -->
+  <div id="comentarios-container"></div>
+
+  <!-- Tabla oculta -->
+  <div class="table-container">
+    <table id="ausentismoTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Gestionable</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="personas.js"></script>
+</body>
+</html>
