@@ -31,6 +31,17 @@ let allData = {
   "ENTREGAS TOTALES": []
 };
 
+// --- FUNCIONES ---
+
+// Formatear fechas a DD/MM/YYYY
+function formatDate(fechaISO) {
+  const date = new Date(fechaISO);
+  const day = String(date.getDate()).padStart(2,'0');
+  const month = String(date.getMonth()+1).padStart(2,'0'); // enero=0
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 // Cargar selects de fecha
 function cargarSelects() {
   for(let d=1; d<=31; d++){
@@ -88,7 +99,7 @@ function filtrarPorFecha(data){
 // Mostrar datos en tablas ocultas y actualizar gráficos
 function mostrarDatos() {
   llenarTabla(produccionTable, filtrarPorFecha(allData.PRODUCCION), ['FECHA','PRODUCIDO REAL ACUMULADO','PLANIFICADO MENSUAL','Comentarios Relevantes']);
-  llenarTabla(cumplimientoTable, filtrarPorFecha(allData.CUMPLIMIENTO), ['FECHA','REAL','PROYECTADO','Comentarios Relevantes']);
+  llenarTabla(cumplimientoTable, filtrarPorFecha(allData.CUMPLIMIENTO), ['FECHA','REAL','PROYECTO','Comentarios Relevantes']);
   llenarTabla(pendienteTable, filtrarPorFecha(allData.PENDIENTE), ['FECHA','ENTREGAS LESA','ENTREGAS MAGNY','PENDIENTE','Comentarios Relevantes']);
   llenarTabla(entregasTable, filtrarPorFecha(allData.ENTREGAS), ['FECHA','ENTREGAS TOTALES','ENTREGAS PLANIFICADAS','Comentarios Relevantes']);
   llenarTabla(despachoTable, filtrarPorFecha(allData.DESPACHO), ['FECHA','DESPACHOS ACUMULADOS','PRODUCCIÓN ACUMULADA','Comentarios Relevantes']);
@@ -106,7 +117,7 @@ function llenarTabla(tbody, data, columnas){
   });
 }
 
-// Actualizar dashboard (ejemplo: contar totales)
+// Actualizar dashboard
 function actualizarDashboard() {
   dashboardContainer.innerHTML = '';
 
@@ -125,7 +136,7 @@ function actualizarDashboard() {
   dashboardContainer.appendChild(crearItem('Entregas Totales - Registros', filtrarPorFecha(allData["ENTREGAS TOTALES"]).length));
 }
 
-// Crear gráficos (uno debajo del otro)
+// Crear gráficos
 function crearGraficos(){
   const container = document.getElementById('charts-container');
   container.innerHTML = '';
@@ -140,11 +151,15 @@ function crearGraficos(){
       backgroundColor: colores[i] || '#007BFF',
       fill: tipo==='line' ? false : true
     }));
-    return new Chart(canvas.getContext('2d'), { type: tipo, data:{ labels: data.map(d=>d.FECHA), datasets }, options:{ responsive:false } });
+    return new Chart(canvas.getContext('2d'), { 
+      type: tipo, 
+      data:{ labels: data.map(d=>formatDate(d.FECHA)), datasets }, 
+      options:{ responsive:false } 
+    });
   }
 
   chartProduccion = crearChart('produccionChart','Producción', filtrarPorFecha(allData.PRODUCCION), ['PRODUCIDO REAL ACUMULADO','PLANIFICADO MENSUAL'], 'line',['#007BFF','#ff4136']);
-  chartCumplimiento = crearChart('cumplimientoChart','Cumplimiento', filtrarPorFecha(allData.CUMPLIMIENTO), ['REAL','PROYECTADO'],'bar',['#2ecc40','#ff851b']);
+  chartCumplimiento = crearChart('cumplimientoChart','Cumplimiento', filtrarPorFecha(allData.CUMPLIMIENTO), ['REAL','PROYECTO'],'bar',['#2ecc40','#ff851b']);
   chartPendiente = crearChart('pendienteChart','Pendiente', filtrarPorFecha(allData.PENDIENTE), ['ENTREGAS LESA','ENTREGAS MAGNY','PENDIENTE'],'bar',['#007BFF','#b10dc9','#ff4136']);
   chartEntregas = crearChart('entregasChart','Entregas', filtrarPorFecha(allData.ENTREGAS), ['ENTREGAS TOTALES','ENTREGAS PLANIFICADAS'],'line',['#17a2b8','#ffdc00']);
   chartDespacho = crearChart('despachoChart','Despacho', filtrarPorFecha(allData.DESPACHO), ['DESPACHOS ACUMULADOS','PRODUCCIÓN ACUMULADA'],'line',['#2ecc40','#ff4136']);
@@ -163,7 +178,7 @@ function mostrarComentarios(){
       filtered.forEach(r=>{
         const card = document.createElement('div');
         card.className='comentario-card';
-        card.innerHTML = `<strong>${r.FECHA}</strong><p>${r[columna]}</p>`;
+        card.innerHTML = `<strong>${formatDate(r.FECHA)}</strong><p>${r[columna]}</p>`;
         section.appendChild(card);
       });
       comentariosContainer.appendChild(section);
@@ -177,7 +192,7 @@ function mostrarComentarios(){
   crearSeccion('Entregas Totales', allData["ENTREGAS TOTALES"],'Comentarios Relevantes');
 }
 
-// Eventos filtros
+// --- EVENTOS ---
 filterBtn.addEventListener('click', ()=>{
   mostrarDatos();
   actualizarDashboard();
@@ -193,7 +208,6 @@ resetBtn.addEventListener('click', ()=>{
   mostrarComentarios();
 });
 
-// Inicializar
+// --- INICIALIZACIÓN ---
 cargarSelects();
 cargarDatos();
-
