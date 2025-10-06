@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Producción</title>
+  <link rel="stylesheet" href="pcp.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.png" alt="Logo de la empresa" class="logo">
+  </div>
+
+  <h1>INDICADORES PCP</h1>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <label for="daySelect">Día:</label>
+    <select id="daySelect"><option value="">Todos</option></select>
+
+    <label for="monthSelect">Mes:</label>
+    <select id="monthSelect"><option value="">Todos</option></select>
+
+    <label for="yearSelect">Año:</label>
+    <select id="yearSelect"><option value="">Todos</option></select>
+
+    <button id="filterBtn">Filtrar</button>
+    <button id="resetBtn">Restablecer</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard-section">
+    <div id="dashboard-container" class="dashboard"></div>
+  </div>
+
+  <!-- Gráficos -->
+  <div id="charts-container"></div>
+
+  <!-- Comentarios -->
+  <div id="comentarios-container"></div>
+
+  <!-- Tablas ocultas -->
+  <div class="table-container">
+    <table id="produccionTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Producido Real Acumulado</th>
+          <th>Planificado Mensual</th>
+          <th>Comentarios Relevantes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <table id="cumplimientoTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Real</th>
+          <th>Proyectado</th>
+          <th>Comentarios Relevantes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <table id="pendienteTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Entregas LESA</th>
+          <th>Entregas MAGNY</th>
+          <th>Pendiente</th>
+          <th>Comentarios Relevantes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <table id="entregasTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Entregas Totales</th>
+          <th>Planificadas</th>
+          <th>Comentarios Relevantes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <table id="despachoTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Despachos Acumulados</th>
+          <th>Producción Acumulada</th>
+          <th>Comentarios Relevantes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <table id="entregasTotalesTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Producción Acumulada</th>
+          <th>Entregas Totales</th>
+          <th>Comentarios Relevantes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="pcp.js"></script>
+</body>
+</html>
+
