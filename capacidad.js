@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwfZkegTN-KIWvJ3r6F5KFkIfEKPbbibkSJe-TeP_uXZxnXNzZ8PkqGtjBTKpJdZSif6A/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbx-hGjFyYopA2I05lJy5IlFiIxDaYQR8b4tjVDPvKlDtplxW9fmguUeu8Xb6fe07sE5/exec";
 
 // Dashboard y contenedores
 const dashboardContainer = document.getElementById('dashboard-container');
@@ -175,4 +175,5 @@ resetBtn.addEventListener('click', ()=>{
 // Inicializar
 cargarSelects();
 cargarDatos();
+
 
