@@ -1,4 +1,4 @@
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyIZWOyTkhdSgeVgWwXH74ol558fBOOxigfrNmGEbxy6XPzt7Y7SnFvWhwMYBJ_7BeYzA/exec'; 
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw7ncx-P6TvzicInO34Bdsl7sbfigEEwRpYc96YelcSphLtCN1ogM0hVu9sTaB9RHOX/exec'; 
 
 // Tablas ocultas
 const paradasTable = document.querySelector('#paradasTable tbody');
@@ -239,3 +239,4 @@ resetBtn.addEventListener('click', ()=>{
 // Inicializar
 cargarSelects();
 cargarDatos();
+
