@@ -1,4 +1,4 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbyGAVBgxbsYDxsMu7EYNwWF9XWKheg0LDflNBiICPXKJ7h-s7cS41mrH-vKYuNa68fA/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbxUNV63Bir5kGr94UK1hiYF9nY7vQ73enmHOgVCRnugEpub7jXcUmEln7PVggVc1CSqJw/exec";
 
 async function cargarDatos() {
   try {
@@ -35,3 +35,4 @@ async function cargarDatos() {
 cargarDatos();
 
 cargarDatos();
+
