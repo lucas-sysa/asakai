@@ -4,6 +4,7 @@ const SHEET_URL = "https://script.google.com/macros/s/AKfycbzQqw4aL_YmNHNrXGjavi
 const tbody = document.querySelector("#dataTable tbody");
 const dashboardContainer = document.getElementById("dashboard-container");
 const chartsContainer = document.getElementById("charts-container");
+const tableContainer = document.querySelector(".table-container"); // Para mostrar la tabla
 
 // Filtros de fecha
 let daySelect, monthSelect, yearSelect;
@@ -62,13 +63,18 @@ function crearFiltros() {
   // Botón reset
   const resetBtn = document.createElement("button");
   resetBtn.textContent = "Restablecer";
-  resetBtn.addEventListener("click", ()=>{
+  resetBtn.addEventListener("click", ()=> {
     daySelect.value = "";
     monthSelect.value = "";
     yearSelect.value = "";
     actualizarVista();
   });
   filterDiv.appendChild(resetBtn);
+
+  // Actualizar automáticamente al cambiar un filtro
+  daySelect.addEventListener("change", actualizarVista);
+  monthSelect.addEventListener("change", actualizarVista);
+  yearSelect.addEventListener("change", actualizarVista);
 
   // Insertar filtros antes del dashboard
   document.body.insertBefore(filterDiv, dashboardContainer);
@@ -93,6 +99,7 @@ async function cargarDatos() {
     const response = await fetch(SHEET_URL);
     const data = await response.json();
     allData = data;
+    tableContainer.style.display = "block"; // Mostrar la tabla
     crearFiltros();
     actualizarVista();
   } catch(err){
@@ -199,3 +206,4 @@ function crearGraficos(data){
 
 // Inicializar
 cargarDatos();
+
