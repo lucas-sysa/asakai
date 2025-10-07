@@ -41,3 +41,79 @@ thead {
   background: #048c7c;
   color: white;
 }
+
+/* Dashboard */
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  margin-bottom: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.dashboard-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 200px;
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-item h3 {
+  margin-bottom: 10px;
+  color: #048c7c;
+  font-size: 16px;
+}
+
+.dashboard-item p {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Contenedor de gráficos */
+#charts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+#charts-container canvas {
+  width: 1000px;
+  height: 300px;
+}
+/* Filtros */
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters select, .filters button {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #048c7c;
+  background-color: #fff;
+  color: #048c7c;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.filters select:hover, .filters button:hover {
+  background-color: #048c7c;
+  color: white;
+}
