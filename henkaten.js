@@ -1,4 +1,4 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbzQqw4aL_YmNHNrXGjaviba3jSKCLAEt89ZLybHnwgfij89sT38jUnjwLphu3J3TOR7/exec"; 
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbz-P14Q1aq_ZQcyHHrzF2_WwoJvX9OSlqx0ryV7p9adSB2zYf3SLxT9g9DoGwmtB1A7/exec"; 
 
 // Contenedores
 const tbody = document.querySelector("#dataTable tbody");
@@ -206,4 +206,5 @@ function crearGraficos(data){
 
 // Inicializar
 cargarDatos();
+
 
