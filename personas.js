@@ -1,4 +1,4 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbxHbOta86s_UJ2m8xjcgcm_LvP3bbV_HsFgQ7nbPDrnOGFwKvSiBOdkYmNJXb65dGac/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw-5GbTGt-2jWy28_CdKhBCDTtl2ylKks7j-4UkcdRdRgu5s7uikvDA9IyFXuTjna2K/exec";
 
 // Tabla oculta
 const ausentismoTable = document.querySelector("#ausentismoTable tbody");
@@ -197,4 +197,5 @@ resetBtn.addEventListener("click", () => {
 // Inicializar
 cargarSelects();
 cargarDatos();
+
 
