@@ -1,0 +1,85 @@
+/* Cuerpo */
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+  margin: 0;
+  text-align: center;
+}
+
+/* Logo */
+.logo {
+  max-width: 250px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+/* Título */
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Fecha / Hora */
+#fecha-hora {
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+thead {
+  background: #048c7c;
+  color: white;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+tbody tr:hover {
+  background: #eef5ff;
+  transition: background 0.2s;
+}
+
+/* Historial semanal */
+#historial {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#selector-semana {
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#selector-semana:hover {
+  background: #007BFF;
+  color: white;
+}
+
