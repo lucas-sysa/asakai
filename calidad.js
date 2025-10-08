@@ -1,5 +1,4 @@
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbznAa54CLIDbTYLMbznKOs-aw9_rEGeCDZZ1qOXxevXnFa6h61wG24UhlXyjMIdt8I/exec";
-const SHEET_URL = "AQUÍ_VA_TU_WEB_APP_URL"; // reemplazá con la URL de tu Web App
 
 // Referencias a elementos
 const daySelect = document.getElementById('daySelect');
@@ -125,4 +124,5 @@ resetBtn.addEventListener('click', () => {
 
 // Inicializar
 loadData();
+
 
