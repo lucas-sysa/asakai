@@ -19,7 +19,12 @@ tr:hover { background: #e3f2fd; }
 </style>
 </head>
 <body>
-
+  
+  <div style="display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 10px;">
+    <button onclick="history.back()" style="padding: 8px 12px; font-size: 14px; cursor: pointer;">Volver</button>
+    <button onclick="alert('Botón1 presionado')" style="padding: 8px 12px; font-size: 14px; cursor: pointer;">Botón1</button>
+  </div>
+  
 <img src="Logo.png" alt="Logo de la empresa" class="logo">
 <h1>ASAKAI - TABLERO DIARIO</h1>
 <div id="fecha-hora"></div>
@@ -203,4 +208,5 @@ setInterval(cargarDatos, 600000);
 
 </body>
 </html>
+
 
