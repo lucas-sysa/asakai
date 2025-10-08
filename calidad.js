@@ -19,7 +19,8 @@ async function loadData() {
     try {
         const res = await fetch(SHEET_URL);
         const json = await res.json();
-        dataGlobal = { Reclamos: json }; // Aseguramos que exista la propiedad Reclamos
+        // Aseguramos que dataGlobal.Reclamos siempre sea un array
+        dataGlobal = { Reclamos: Array.isArray(json) ? json : [] };
         populateFilters();
         updateCharts();
     } catch (err) {
@@ -89,8 +90,8 @@ function updateCharts() {
     });
 
     // Gráfico Reclamos con/sin riesgo
-    const conRiesgo = filtered.map(r => r.Comentarios_Reclamo1.includes("CON RIESGO") ? 1 : 0);
-    const sinRiesgo = filtered.map(r => r.Comentarios_Reclamo1.includes("SIN RIESGO") ? 1 : 0);
+    const conRiesgo = filtered.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("CON RIESGO") ? 1 : 0);
+    const sinRiesgo = filtered.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("SIN RIESGO") ? 1 : 0);
 
     if(riesgoChart) riesgoChart.destroy();
     riesgoChart = new Chart(riesgoChartCtx, {
