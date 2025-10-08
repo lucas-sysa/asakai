@@ -15,9 +15,10 @@ const riesgoChartCtx = document.getElementById('riesgoChart').getContext('2d');
 const buenoDirectoChartCtx = document.getElementById('buenoDirectoChart').getContext('2d');
 const retencionesMasivasChartCtx = document.getElementById('retencionesMasivasChart').getContext('2d');
 const unidadesRetenidasChartCtx = document.getElementById('unidadesRetenidasChart').getContext('2d');
+const marcasChartCtx = document.getElementById('marcasChart').getContext('2d');
 
 let dataGlobal = null;
-let reclamosChart, riesgoChart, buenoDirectoChart, retencionesMasivasChart, unidadesRetenidasChart;
+let reclamosChart, riesgoChart, buenoDirectoChart, retencionesMasivasChart, unidadesRetenidasChart, marcasChart;
 
 // --- Cargar datos desde Google Sheets ---
 async function loadData() {
@@ -25,7 +26,6 @@ async function loadData() {
         const res = await fetch(SHEET_URL);
         const json = await res.json();
 
-        // Asegurar que cada hoja sea un array
         dataGlobal = {
             Reclamos: Array.isArray(json.Reclamos) ? json.Reclamos : (Array.isArray(json) ? json : []),
             BuenoDirecto: Array.isArray(json.BuenoDirecto) ? json.BuenoDirecto : [],
@@ -91,63 +91,95 @@ function updateCharts() {
 
     updateDashboard(filteredReclamos, filteredRetenciones);
 
-    // Reclamos de Clientes
-    const fechasReclamos = filteredReclamos.map(r => r.Fecha);
-    const valoresReclamos = filteredReclamos.map(r => Number(r["Reclamos de Clientes"]) || 0);
+    updateReclamosChart(filteredReclamos);
+    updateRiesgoChart(filteredReclamos);
+    updateBuenoDirectoChart(filteredBueno);
+    updateRetencionesMasivasChart(filteredRetenciones);
+    updateUnidadesRetenidasChart(filteredRetenciones);
+    updateMarcasChart(filteredReclamos);
+}
+
+// --- Gráficos individuales ---
+function updateReclamosChart(filtered) {
+    const fechas = filtered.map(r => r.Fecha);
+    const valores = filtered.map(r => Number(r["Reclamos de Clientes"])||0);
     if(reclamosChart) reclamosChart.destroy();
     reclamosChart = new Chart(reclamosChartCtx, {
         type:'bar',
-        data:{labels:fechasReclamos,datasets:[{label:'Reclamos de Clientes', data:valoresReclamos, backgroundColor:'rgba(75,192,192,0.6)'}]},
+        data:{labels:fechas,datasets:[{label:'Reclamos de Clientes',data:valores,backgroundColor:'rgba(75,192,192,0.6)'}]},
         options:{responsive:true, plugins:{legend:{display:false}}}
     });
+}
 
-    // Reclamos con/sin riesgo
-    const conRiesgo = filteredReclamos.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("CON RIESGO")?1:0);
-    const sinRiesgo = filteredReclamos.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("SIN RIESGO")?1:0);
+function updateRiesgoChart(filtered) {
+    const fechas = filtered.map(r => r.Fecha);
+    const conRiesgo = filtered.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("CON RIESGO")?1:0);
+    const sinRiesgo = filtered.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("SIN RIESGO")?1:0);
     if(riesgoChart) riesgoChart.destroy();
     riesgoChart = new Chart(riesgoChartCtx, {
         type:'bar',
-        data:{labels:fechasReclamos,datasets:[
-            {label:'Con Riesgo', data:conRiesgo, backgroundColor:'red'},
-            {label:'Sin Riesgo', data:sinRiesgo, backgroundColor:'green'}
+        data:{labels:fechas,datasets:[
+            {label:'Con Riesgo',data:conRiesgo,backgroundColor:'red'},
+            {label:'Sin Riesgo',data:sinRiesgo,backgroundColor:'green'}
         ]},
         options:{responsive:true, plugins:{legend:{position:'top'}}}
     });
+}
 
-    // % Bueno Directo Diario
-    const fechasBueno = filteredBueno.map(r => r.Fecha);
-    const valoresBueno = filteredBueno.map(r => Number(r["% de Bueno Directo Diario"])||0);
+function updateBuenoDirectoChart(filtered) {
+    const fechas = filtered.map(r => r.Fecha);
+    const valores = filtered.map(r => Number(r["% de Bueno Directo Diario"])||0);
     if(buenoDirectoChart) buenoDirectoChart.destroy();
     buenoDirectoChart = new Chart(buenoDirectoChartCtx,{
         type:'line',
-        data:{labels:fechasBueno,datasets:[{label:'% Bueno Directo Diario', data:valoresBueno, borderColor:'blue', backgroundColor:'rgba(0,0,255,0.2)', fill:true, tension:0.2}]},
+        data:{labels:fechas,datasets:[{label:'% Bueno Directo Diario',data:valores,borderColor:'blue',backgroundColor:'rgba(0,0,255,0.2)',fill:true,tension:0.2}]},
         options:{responsive:true, plugins:{legend:{position:'top'}}}
     });
+}
 
-    // Retenciones Masivas
-    const fechasRetenciones = filteredRetenciones.map(r => r.Fecha);
-    const valoresRetMasivas = filteredRetenciones.map(r => Number(r["Cantidad de Retenciones MASIVAS"])||0);
+function updateRetencionesMasivasChart(filtered) {
+    const fechas = filtered.map(r => r.Fecha);
+    const valores = filtered.map(r => Number(r["Cantidad de Retenciones MASIVAS"])||0);
     if(retencionesMasivasChart) retencionesMasivasChart.destroy();
     retencionesMasivasChart = new Chart(retencionesMasivasChartCtx,{
         type:'bar',
-        data:{labels:fechasRetenciones,datasets:[{label:'Retenciones Masivas', data:valoresRetMasivas, backgroundColor:'orange'}]},
+        data:{labels:fechas,datasets:[{label:'Retenciones Masivas',data:valores,backgroundColor:'orange'}]},
         options:{responsive:true, plugins:{legend:{position:'top'}}}
     });
+}
 
-    // Unidades Retenidas
-    const valoresUnidades = filteredRetenciones.map(r => Number(r["Cantidad de Unidades RETENIDAS PISO"])||0);
+function updateUnidadesRetenidasChart(filtered) {
+    const fechas = filtered.map(r => r.Fecha);
+    const valores = filtered.map(r => Number(r["Cantidad de Unidades RETENIDAS PISO"])||0);
     if(unidadesRetenidasChart) unidadesRetenidasChart.destroy();
     unidadesRetenidasChart = new Chart(unidadesRetenidasChartCtx,{
         type:'bar',
-        data:{labels:fechasRetenciones,datasets:[{label:'Unidades Retenidas', data:valoresUnidades, backgroundColor:'purple'}]},
+        data:{labels:fechas,datasets:[{label:'Unidades Retenidas',data:valores,backgroundColor:'purple'}]},
         options:{responsive:true, plugins:{legend:{position:'top'}}}
+    });
+}
+
+function updateMarcasChart(filtered) {
+    const marcaCounts = {};
+    filtered.forEach(r => {
+        const marca = r.MARCA || "SIN MARCA";
+        const reclamos = Number(r["Reclamos de Clientes"]) || 0;
+        marcaCounts[marca] = (marcaCounts[marca] || 0) + reclamos;
+    });
+    const labels = Object.keys(marcaCounts);
+    const data = Object.values(marcaCounts);
+    if(marcasChart) marcasChart.destroy();
+    marcasChart = new Chart(marcasChartCtx,{
+        type:'bar',
+        data:{labels:labels,datasets:[{label:'Reclamos por Marca',data:data,backgroundColor:'rgba(255,99,132,0.6)'}]},
+        options:{responsive:true, plugins:{legend:{display:false}}}
     });
 }
 
 // --- Botones ---
 filterBtn.addEventListener('click', updateCharts);
-resetBtn.addEventListener('click', () => {
-    daySelect.value = monthSelect.value = yearSelect.value = '';
+resetBtn.addEventListener('click',()=>{
+    daySelect.value=monthSelect.value=yearSelect.value='';
     updateCharts();
 });
 
