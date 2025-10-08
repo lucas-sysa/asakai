@@ -17,25 +17,19 @@
   <!-- Filtros -->
   <div class="filters">
     <label for="daySelect">Día:</label>
-    <select id="daySelect">
-      <option value="">Todos</option>
-    </select>
+    <select id="daySelect"><option value="">Todos</option></select>
 
     <label for="monthSelect">Mes:</label>
-    <select id="monthSelect">
-      <option value="">Todos</option>
-    </select>
+    <select id="monthSelect"><option value="">Todos</option></select>
 
     <label for="yearSelect">Año:</label>
-    <select id="yearSelect">
-      <option value="">Todos</option>
-    </select>
+    <select id="yearSelect"><option value="">Todos</option></select>
 
     <button id="filterBtn">Filtrar</button>
     <button id="resetBtn">Restablecer</button>
   </div>
 
-  <!-- Dashboard con gráfico de torta integrado -->
+  <!-- Dashboard -->
   <div class="dashboard">
     <div class="dashboard-item">
       <h3>Jornadas SIN Accidentes</h3>
@@ -69,9 +63,7 @@
           <th>Incidentes</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Se llena desde JS -->
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 
@@ -79,29 +71,6 @@
   <h2>Historial de Accidentes e Incidentes</h2>
   <canvas id="historialChart" width="400" height="200"></canvas>
 
-  <!-- Tabla completa (oculta) -->
-  <div class="table-container" style="display:none;">
-    <table id="historialTable">
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Accidentes</th>
-          <th>Incidentes</th>
-          <th>TIPO DE ACCIDENTE</th>
-          <th>Dias Sin Accidentes</th>
-          <th>Record</th>
-          <th>Comentarios 1</th>
-          <th>Comentarios 2</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Datos desde Google Sheet -->
-      </tbody>
-    </table>
-  </div>
-
   <script src="seguridad.js"></script>
 </body>
 </html>
-
-
