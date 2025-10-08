@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let chart;
   let bajaChart;
 
+  // ---------------------------------------
   // Cargar datos desde Google Sheet
+  // ---------------------------------------
   async function cargarDatos() {
     try {
       const response = await fetch(SHEET_URL);
@@ -31,10 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Mostrar datos y actualizar dashboard
+  // ---------------------------------------
+  // Mostrar datos en la tabla de comentarios y actualizar dashboard
+  // ---------------------------------------
   function mostrarDatos(data) {
-    // Tabla de comentarios
     comentariosTbody.innerHTML = '';
+
     data.forEach((row, index) => {
       if (row['Comentarios 1'] || row['Comentarios 2']) {
         const fechaStr = new Date(row.Fecha).toISOString().split('T')[0];
@@ -54,7 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarDashboard(data);
   }
 
-  // Dashboard y gráfico de torta por tipo de accidente
+  // ---------------------------------------
+  // Dashboard y gráfico de torta
+  // ---------------------------------------
   function actualizarDashboard(data) {
     const sinAccidentes = data.filter(d => Number(d.Accidentes) === 0).length;
     const totalAccidentes = data.reduce((sum,d)=>sum+Number(d.Accidentes),0);
@@ -64,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('totalAccidentes').textContent = totalAccidentes;
     document.getElementById('totalIncidentes').textContent = totalIncidentes;
 
+    // Gráfico de torta por tipo de accidente
     const tipoCounts = {};
     data.forEach(d=>{
       const tipo = d['TIPO DE ACCIDENTE'];
@@ -77,14 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('bajaChart').getContext('2d');
     bajaChart = new Chart(ctx, {
       type: 'doughnut',
-      data: { labels, datasets:[{ data: values, backgroundColor: labels.map(() => `hsl(${Math.random()*360},70%,60%)`) }] },
+      data: {
+        labels,
+        datasets:[{
+          data: values,
+          backgroundColor: labels.map(() => `hsl(${Math.random()*360},70%,60%)`)
+        }]
+      },
       options: { responsive:true, plugins:{legend:{position:'bottom'}} }
     });
 
     crearGrafico(data);
   }
 
-  // Gráfico de barras
+  // ---------------------------------------
+  // Gráfico de barras histórico
+  // ---------------------------------------
   function crearGrafico(data) {
     const labels = data.map(d=>new Date(d.Fecha).toISOString().split('T')[0]);
     const accidentes = data.map(d=>Number(d.Accidentes));
@@ -105,20 +120,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Cargar selects
+  // ---------------------------------------
+  // Cargar selects de día, mes y año
+  // ---------------------------------------
   function cargarSelects() {
-    for(let d=1;d<=31;d++){
+    for(let d=1; d<=31; d++){
       const o = document.createElement('option'); o.value=d.toString().padStart(2,'0'); o.textContent=d; daySelect.appendChild(o);
     }
-    for(let m=1;m<=12;m++){
+    for(let m=1; m<=12; m++){
       const o = document.createElement('option'); o.value=m.toString().padStart(2,'0'); o.textContent=m; monthSelect.appendChild(o);
     }
-    for(let y=2000;y<=2030;y++){
+    for(let y=2000; y<=2030; y++){
       const o = document.createElement('option'); o.value=y; o.textContent=y; yearSelect.appendChild(o);
     }
   }
 
+  // ---------------------------------------
   // Filtrar por fecha
+  // ---------------------------------------
   function filtrarPorFecha(data) {
     const day=daySelect.value, month=monthSelect.value, year=yearSelect.value;
     return data.filter(row=>{
@@ -127,7 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Eventos
+  // ---------------------------------------
+  // Eventos de filtros
+  // ---------------------------------------
   filterBtn.addEventListener('click', ()=>{
     const filtered = filtrarPorFecha(allData);
     mostrarDatos(filtered);
@@ -138,7 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarDatos(allData);
   });
 
+  // ---------------------------------------
   // Inicializar
+  // ---------------------------------------
   cargarSelects();
   cargarDatos();
 
