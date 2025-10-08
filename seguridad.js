@@ -31,7 +31,7 @@ function mostrarDatos(data) {
   data.forEach(row => {
     const fecha = row.Fecha.split('T')[0]; // YYYY-MM-DD
     const tr = document.createElement('tr');
-    tr.innerHTML = 
+    tr.innerHTML = `
       <td>${fecha}</td>
       <td>${row.Accidentes}</td>
       <td>${row.Incidentes}</td>
@@ -40,7 +40,7 @@ function mostrarDatos(data) {
       <td>${row.Record}</td>
       <td>${row['Comentarios 1']}</td>
       <td>${row['Comentarios 2']}</td>
-    ;
+    `;
     tableBody.appendChild(tr);
   });
 
@@ -48,6 +48,7 @@ function mostrarDatos(data) {
   actualizarComentariosTabla(data);
 }
 
+// Crear gráfico de barras
 // Crear gráfico de barras
 function crearGrafico(data) {
   const labels = data.map(d => d.Fecha.split('T')[0]);
@@ -120,7 +121,7 @@ function actualizarDashboard(data) {
       labels: labels,
       datasets: [{
         data: values,
-        backgroundColor: labels.map(() => hsl(${Math.random()*360}, 70%, 60%))
+        backgroundColor: labels.map(() => `hsl(${Math.random()*360}, 70%, 60%)`)
       }]
     },
     options: {
@@ -140,14 +141,14 @@ function actualizarComentariosTabla(data) {
   data.forEach((row, index) => {
     if(row['Comentarios 1'] || row['Comentarios 2']){
       const tr = document.createElement('tr');
-      tr.innerHTML = 
+      tr.innerHTML = `
         <td>${index + 1}</td>
         <td>${row['Comentarios 1'] || ''}</td>
         <td>${row['Comentarios 2'] || ''}</td>
         <td>${row.Fecha.split('T')[0]}</td>
         <td>${row.Accidentes}</td>
         <td>${row.Incidentes}</td>
-      ;
+      `;
       tbody.appendChild(tr);
     }
   });
@@ -211,4 +212,3 @@ resetBtn.addEventListener('click', () => {
 // Inicializar
 cargarSelects();
 cargarDatos();
-
