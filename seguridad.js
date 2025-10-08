@@ -212,38 +212,3 @@ resetBtn.addEventListener('click', () => {
 cargarSelects();
 cargarDatos();
 
-
-
-
-ChatGPT dijo:
-
-Perfecto, ahora solo falta el Apps Script que está vinculado al Sheet para devolver los datos en JSON.
-
-Sin ese código, no se puede saber si el problema viene de Google Apps Script o de tu HTML/JS.
-
-Cuando me pases el Apps Script completo, puedo:
-
-Revisar si doGet() está correctamente configurado.
-
-Ajustarlo para que tu fetch(SHEET_URL) funcione sin errores de CORS.
-
-Hacer que los datos se carguen en tu tabla y gráficos correctamente.
-
-¿Me pasás ese último código?
-
-Dijiste:
-function doGet(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Hoja 1");
-  const data = sheet.getDataRange().getValues();
-  const headers = data.shift(); // Primera fila = headers
-
-  const json = data.map(row => {
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = row[i]);
-    return obj;
-  });
-
-  return ContentService
-    .createTextOutput(JSON.stringify(json))
-    .setMimeType(ContentService.MimeType.JSON);
-}
