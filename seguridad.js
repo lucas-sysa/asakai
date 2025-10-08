@@ -128,3 +128,4 @@ resetBtn.addEventListener('click',()=>{
 // Inicializar
 cargarSelects();
 cargarDatos();
+
