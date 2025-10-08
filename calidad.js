@@ -20,6 +20,16 @@ const marcasChartCtx = document.getElementById('marcasChart').getContext('2d');
 let dataGlobal = null;
 let reclamosChart, riesgoChart, buenoDirectoChart, retencionesMasivasChart, unidadesRetenidasChart, marcasChart;
 
+// --- Formatear fecha solo YYYY-MM-DD ---
+function formatDateOnly(fecha) {
+    const d = new Date(fecha);
+    if (isNaN(d)) return '';
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 // --- Cargar datos desde Google Sheets ---
 async function loadData() {
     try {
@@ -101,7 +111,7 @@ function updateCharts() {
 
 // --- Gráficos individuales ---
 function updateReclamosChart(filtered) {
-    const fechas = filtered.map(r => r.Fecha);
+    const fechas = filtered.map(r => formatDateOnly(r.Fecha));
     const valores = filtered.map(r => Number(r["Reclamos de Clientes"])||0);
     if(reclamosChart) reclamosChart.destroy();
     reclamosChart = new Chart(reclamosChartCtx, {
@@ -112,7 +122,7 @@ function updateReclamosChart(filtered) {
 }
 
 function updateRiesgoChart(filtered) {
-    const fechas = filtered.map(r => r.Fecha);
+    const fechas = filtered.map(r => formatDateOnly(r.Fecha));
     const conRiesgo = filtered.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("CON RIESGO")?1:0);
     const sinRiesgo = filtered.map(r => r.Comentarios_Reclamo1 && r.Comentarios_Reclamo1.includes("SIN RIESGO")?1:0);
     if(riesgoChart) riesgoChart.destroy();
@@ -127,7 +137,7 @@ function updateRiesgoChart(filtered) {
 }
 
 function updateBuenoDirectoChart(filtered) {
-    const fechas = filtered.map(r => r.Fecha);
+    const fechas = filtered.map(r => formatDateOnly(r.Fecha));
     const valores = filtered.map(r => Number(r["% de Bueno Directo Diario"])||0);
     if(buenoDirectoChart) buenoDirectoChart.destroy();
     buenoDirectoChart = new Chart(buenoDirectoChartCtx,{
@@ -138,7 +148,7 @@ function updateBuenoDirectoChart(filtered) {
 }
 
 function updateRetencionesMasivasChart(filtered) {
-    const fechas = filtered.map(r => r.Fecha);
+    const fechas = filtered.map(r => formatDateOnly(r.Fecha));
     const valores = filtered.map(r => Number(r["Cantidad de Retenciones MASIVAS"])||0);
     if(retencionesMasivasChart) retencionesMasivasChart.destroy();
     retencionesMasivasChart = new Chart(retencionesMasivasChartCtx,{
@@ -149,7 +159,7 @@ function updateRetencionesMasivasChart(filtered) {
 }
 
 function updateUnidadesRetenidasChart(filtered) {
-    const fechas = filtered.map(r => r.Fecha);
+    const fechas = filtered.map(r => formatDateOnly(r.Fecha));
     const valores = filtered.map(r => Number(r["Cantidad de Unidades RETENIDAS PISO"])||0);
     if(unidadesRetenidasChart) unidadesRetenidasChart.destroy();
     unidadesRetenidasChart = new Chart(unidadesRetenidasChartCtx,{
@@ -160,6 +170,7 @@ function updateUnidadesRetenidasChart(filtered) {
 }
 
 function updateMarcasChart(filtered) {
+    // Para marcas no usamos fecha, sigue igual
     const marcaCounts = {};
     filtered.forEach(r => {
         const marca = r.MARCA || "SIN MARCA";
