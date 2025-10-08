@@ -15,7 +15,7 @@ const riesgoChartCtx = document.getElementById('riesgoChart').getContext('2d');
 let dataGlobal = null;
 let reclamosChart, riesgoChart;
 
-// Función para cargar datos desde el Sheet
+// Cargar datos desde el Sheet
 async function loadData() {
   const res = await fetch(SHEET_URL);
   dataGlobal = await res.json();
@@ -24,7 +24,7 @@ async function loadData() {
   updateCharts();
 }
 
-// Poblar filtros automáticamente
+// Llenar filtros automáticamente
 function populateFilters() {
   if (!dataGlobal) return;
 
@@ -49,10 +49,15 @@ function getFilteredData() {
   const year = yearSelect.value;
 
   return dataGlobal.Reclamos.filter(r => {
+    if (!r.Fecha) return false;
+
     const d = new Date(r.Fecha);
-    return (!day || d.getDate() == day) &&
-           (!month || d.getMonth()+1 == month) &&
-           (!year || d.getFullYear() == year);
+
+    const matchDay = !day || d.getDate() === Number(day);
+    const matchMonth = !month || (d.getMonth() + 1) === Number(month);
+    const matchYear = !year || d.getFullYear() === Number(year);
+
+    return matchDay && matchMonth && matchYear;
   });
 }
 
@@ -91,7 +96,6 @@ function updateCharts() {
   });
 
   // Gráfico Reclamos con/sin riesgo
-  // Para este ejemplo, asumimos que si "Comentarios_Reclamo1" existe, es con riesgo
   const conRiesgo = filtered.map(r => r.Comentarios_Reclamo1 ? 1 : 0);
   const sinRiesgo = filtered.map(r => r.Comentarios_Reclamo1 ? 0 : 1);
 
@@ -124,5 +128,3 @@ resetBtn.addEventListener('click', () => {
 
 // Inicializar
 loadData();
-
-
