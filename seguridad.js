@@ -1,4 +1,4 @@
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyCbtWSU96K3vcBBl-kSNRyJvigheV3i2RK__C09leF9ru3aUZk4Aqp_aYfmwFFbcKAKA/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycby9hYEsl_Q_roWtaxuePLH_fN4tMmlwt5pRkGiWQ83457mBsfbUVrLKfuW3fWIQT6t_HQ/exec';
 
 const tableBody = document.querySelector('#historialTable tbody');
 const daySelect = document.getElementById('daySelect');
@@ -211,4 +211,5 @@ resetBtn.addEventListener('click', () => {
 // Inicializar
 cargarSelects();
 cargarDatos();
+
 
