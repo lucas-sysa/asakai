@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---------------------------------------
-  // Dashboard y gráfico de torta
+  // Dashboard y gráfico de torta con porcentaje
   // ---------------------------------------
   function actualizarDashboard(data) {
     const sinAccidentes = data.filter(d => Number(d.Accidentes) === 0).length;
@@ -74,11 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const tipoCounts = {};
     data.forEach(d=>{
       const tipo = d['TIPO DE ACCIDENTE'];
-      if(tipo) tipoCounts[tipo]=(tipoCounts[tipo]||0)+Number(d.Accidentes);
+      if(tipo) tipoCounts[tipo] = (tipoCounts[tipo]||0) + Number(d.Accidentes);
     });
 
     const labels = Object.keys(tipoCounts);
     const values = Object.values(tipoCounts);
+
+    // Total para calcular porcentaje
+    const total = values.reduce((a,b)=>a+b, 0);
 
     if (bajaChart) bajaChart.destroy();
     const ctx = document.getElementById('bajaChart').getContext('2d');
@@ -86,12 +89,26 @@ document.addEventListener('DOMContentLoaded', () => {
       type: 'doughnut',
       data: {
         labels,
-        datasets:[{
+        datasets: [{
           data: values,
           backgroundColor: labels.map(() => `hsl(${Math.random()*360},70%,60%)`)
         }]
       },
-      options: { responsive:true, plugins:{legend:{position:'bottom'}} }
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const value = context.raw;
+                const porcentaje = total ? ((value / total) * 100).toFixed(1) : 0;
+                return `${context.label}: ${value} (${porcentaje}%)`;
+              }
+            }
+          }
+        }
+      }
     });
 
     crearGrafico(data);
