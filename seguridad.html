@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>S - SEGURIDAD</title>
   <link rel="stylesheet" href="seguridad.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Chart.js y plugin para datalabels desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 </head>
 <body>
 
@@ -17,74 +20,73 @@
   </button>
 </div>
   
-  <div class="logo-container">
-    <img src="Logo.png" alt="Logo de la empresa" class="logo">
+<div class="logo-container">
+  <img src="Logo.png" alt="Logo de la empresa" class="logo">
+</div>
+
+<h1>S - SEGURIDAD</h1>
+
+<!-- Filtros -->
+<div class="filters">
+  <label for="daySelect">Día:</label>
+  <select id="daySelect"><option value="">Todos</option></select>
+
+  <label for="monthSelect">Mes:</label>
+  <select id="monthSelect"><option value="">Todos</option></select>
+
+  <label for="yearSelect">Año:</label>
+  <select id="yearSelect"><option value="">Todos</option></select>
+
+  <button id="filterBtn">Filtrar</button>
+  <button id="resetBtn">Restablecer</button>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard">
+  <div class="dashboard-item">
+    <h3>Jornadas SIN Accidentes</h3>
+    <p id="sinAccidentes" class="numero-dashboard">0</p>
   </div>
-
-  <h1>S - SEGURIDAD</h1>
-
-  <!-- Filtros -->
-  <div class="filters">
-    <label for="daySelect">Día:</label>
-    <select id="daySelect"><option value="">Todos</option></select>
-
-    <label for="monthSelect">Mes:</label>
-    <select id="monthSelect"><option value="">Todos</option></select>
-
-    <label for="yearSelect">Año:</label>
-    <select id="yearSelect"><option value="">Todos</option></select>
-
-    <button id="filterBtn">Filtrar</button>
-    <button id="resetBtn">Restablecer</button>
+  <div class="dashboard-item">
+    <h3>ACCIDENTES</h3>
+    <p id="totalAccidentes" class="numero-dashboard">0</p>
   </div>
-
-  <!-- Dashboard -->
-  <div class="dashboard">
-    <div class="dashboard-item">
-      <h3>Jornadas SIN Accidentes</h3>
-      <p id="sinAccidentes" class="numero-dashboard">0</p>
-    </div>
-    <div class="dashboard-item">
-      <h3>ACCIDENTES</h3>
-      <p id="totalAccidentes" class="numero-dashboard">0</p>
-    </div>
-    <div class="dashboard-item">
-      <h3>INCIDENTES</h3>
-      <p id="totalIncidentes" class="numero-dashboard">0</p>
-    </div>
-    <div class="dashboard-item chart-container">
-      <h3>Distribución por TIPO</h3>
-      <canvas id="bajaChart"></canvas>
-    </div>
+  <div class="dashboard-item">
+    <h3>INCIDENTES</h3>
+    <p id="totalIncidentes" class="numero-dashboard">0</p>
   </div>
-
-  <!-- Tabla de comentarios -->
-  <h2>Comentarios sobre Accidentes e Incidentes</h2>
-  <div class="comentarios-table">
-    <table id="comentariosTable">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Comentarios 1</th>
-          <th></th>
-          <th>Fecha</th>
-          <th>Accidentes</th>
-          <th>Incidentes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Se llena desde JS -->
-      </tbody>
-    </table>
+  <div class="dashboard-item chart-container">
+    <h3>Distribución por TIPO</h3>
+    <canvas id="bajaChart"></canvas>
   </div>
+</div>
 
-  <!-- Gráfico de barras -->
-  <h2>Historial de Accidentes e Incidentes</h2>
-  <canvas id="historialChart" width="400" height="200"></canvas>
+<!-- Tabla de comentarios -->
+<h2>Comentarios sobre Accidentes e Incidentes</h2>
+<div class="comentarios-table">
+  <table id="comentariosTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Comentarios 1</th>
+        <th></th>
+        <th>Fecha</th>
+        <th>Accidentes</th>
+        <th>Incidentes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Se llena desde JS -->
+    </tbody>
+  </table>
+</div>
 
-  <script src="seguridad.js"></script>
+<!-- Gráfico de barras -->
+<h2>Historial de Accidentes e Incidentes</h2>
+<canvas id="historialChart" width="400" height="200"></canvas>
+
+<!-- Tu JS personalizado -->
+<script src="seguridad.js?v=1.1"></script>
+
 </body>
 </html>
-
-
-
