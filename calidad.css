@@ -1,105 +1,243 @@
+:root {
+  /* Paleta La Emilia */
+  --primary: #04847c;
+  --hover: #036b65;
+  --bg-app: #f4f7f6; 
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --white: #ffffff;
+  --border-light: #e2e8f0;
+  
+  /* Sombras y efectos */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --transition: all 0.3s ease;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-app);
+  margin: 0;
   padding: 20px;
-  background-color: #f4f4f4;
+  color: var(--text-main);
 }
 
-h1, h3 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
+/* --- BARRA DE FILTROS (ESTILO ACTUALIZADO) --- */
 .filters {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.filters select, .filters button {
-  padding: 6px 10px;
-  margin: 0 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filters button:hover {
-  background: #007BFF;
-  color: white;
-}
-
-/* Dashboard */
-.dashboard {
+  background: var(--white);
+  padding: 15px 30px;
+  border-radius: 12px;
+  margin: 0 auto 30px auto;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  
+  /* Alineación central para que coincida con tus marcas rojas */
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.dashboard-item {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  width: 200px;
-  flex: 1;
-  min-width: 160px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.dashboard-item p {
-  font-size: 130px; /* números más grandes */
-  font-weight: bold;
-  margin: 0;
-}
-
-.numero-dashboard {
-  font-size: 50px;
-  font-weight: bold;
-  margin: 0;
-}
-
-/* Chart containers */
-.charts {
-  display: flex;
+  gap: 20px; 
   flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 20px;
+  max-width: 1350px; /* Ajuste para alinear con el ancho de las 3 columnas */
 }
 
-.chart-item {
-  background: #fff;
-  padding: 20px;
+/* Estilo para los label que contienen los selects */
+.filters label {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el texto "Día:" y el desplegable */
+}
+
+/* Estilo de los Selectores */
+.filters select {
+  padding: 8px 12px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  width: 400px;
-  max-width: 90%;
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 100px;
 }
 
-.chart-item canvas {
-  width: 100% !important;
-  height: auto !important;
+.filters select:focus {
+  border-color: var(--primary);
+  background-color: var(--white);
+  box-shadow: 0 0 0 3px rgba(4, 132, 124, 0.1);
 }
 
-/* Logo */
-.logo-container {
-  text-align: center;
-  margin-bottom: 15px;
+/* Botones de acción */
+.filters button {
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
 }
 
-.logo {
-  max-width: 250px;
-  height: auto;
+/* Botón Filtrar (Principal) */
+#filterBtn {
+  background: var(--primary);
+  color: var(--white);
 }
 
-/* Tablas ocultas */
-.comentarios-table,
-.table-container {
-  display: none;
+#filterBtn:hover {
+  background: var(--hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(4, 132, 124, 0.2);
 }
 
+/* Botón Restablecer (Secundario) */
+#resetBtn {
+  background: #f8fafc;
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+
+#resetBtn:hover {
+  background: var(--white);
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+/* --- ESTRUCTURA DEL DASHBOARD --- */
+
+.top-bar { 
+  display: flex; 
+  justify-content: flex-end; 
+  gap: 10px; 
+  margin-bottom: 20px; 
+}
+
+.top-bar button { 
+  padding: 10px 20px; 
+  cursor: pointer; 
+  border: 1px solid var(--border-light); 
+  border-radius: 8px; 
+  background: var(--white); 
+  color: var(--text-main);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.top-bar button:hover {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.logo-container { text-align: center; margin-bottom: 10px; }
+.logo { max-width: 180px; }
+
+h1 { 
+  text-align: center; 
+  color: var(--primary); 
+  margin-top: 0; 
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: -0.5px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  min-width: 320px;
+  max-width: 450px;
+}
+
+.dashboard-item, .chart-item {
+  background: var(--white);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 4px solid var(--primary); 
+  transition: var(--transition);
+}
+
+.dashboard-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-item h3 { 
+  color: var(--text-muted); 
+  text-transform: uppercase; 
+  font-size: 0.8rem; 
+  letter-spacing: 1px; 
+  margin-top: 0;
+}
+
+.numero-dashboard { 
+  font-size: 55px; 
+  font-weight: 800; 
+  margin: 15px 0; 
+  color: var(--primary); 
+}
+
+.indicador-mes { 
+  font-size: 0.9rem; 
+  border-top: 1px solid var(--border-light); 
+  padding-top: 15px; 
+  font-weight: 600; 
+  color: var(--text-muted);
+}
+
+/* Colores Semáforo */
+.bg-verde { 
+  background-color: #10b981 !important; 
+  color: white !important; 
+  border-bottom: 4px solid #059669 !important;
+}
+
+.bg-verde .numero-dashboard, 
+.bg-verde .indicador-mes { color: white !important; }
+
+.bg-rojo { 
+  background-color: #ef4444 !important; 
+  color: white !important; 
+  border-bottom: 4px solid #dc2626 !important;
+}
+
+.bg-rojo .numero-dashboard, 
+.bg-rojo .indicador-mes { color: white !important; }
+
+.chart-item h3 { 
+  font-size: 1.1rem; 
+  margin-bottom: 20px; 
+  color: var(--text-main); 
+  font-weight: 700;
+  border-bottom: 2px solid var(--bg-app);
+  padding-bottom: 10px;
+}
+
+.small-chart { 
+  max-width: 85%; 
+  margin: 0 auto;
+  display: block;
+}
+
+/* Responsividad */
+@media (max-width: 1000px) {
+  .main-container { flex-direction: column; align-items: center; }
+  .column { width: 95%; max-width: none; }
+  .filters { padding: 15px; gap: 15px; }
+}
