@@ -3,18 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Q - CALIDAD</title>
+<title>Q - CALIDAD Dashboard</title>
 <link rel="stylesheet" href="calidad.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     
-<div style="display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 10px;">
-  <button onclick="history.back()" style="padding: 8px 12px; font-size: 14px; cursor: pointer;">Volver</button>
-  <button onclick="window.open('https://docs.google.com/spreadsheets/d/113N5_KhyLXhvzQFhGua_6faSzL54DWW5ZQzcDvacry4/edit?gid=0#gid=0', '_blank')" 
-    style="padding: 8px 12px; font-size: 14px; cursor: pointer;">
-    Excel
-  </button>
+<div class="top-bar">
+  <button onclick="history.back()">Volver</button>
+  <button onclick="window.open('https://docs.google.com/spreadsheets/d/113N5_KhyLXhvzQFhGua_6faSzL54DWW5ZQzcDvacry4/edit?gid=0#gid=0', '_blank')">Excel</button>
 </div>
     
 <div class="logo-container">
@@ -24,95 +21,61 @@
 <h1>Q - CALIDAD</h1>
 
 <div class="filters">
-  <label for="daySelect">Día:</label>
-  <select id="daySelect"><option value="">Todos</option></select>
-
-  <label for="monthSelect">Mes:</label>
-  <select id="monthSelect"><option value="">Todos</option></select>
-
-  <label for="yearSelect">Año:</label>
-  <select id="yearSelect"><option value="">Todos</option></select>
-
+  <label>Día: <select id="daySelect"></select></label>
+  <label>Mes: <select id="monthSelect"></select></label>
+  <label>Año: <select id="yearSelect"></select></label>
   <button id="filterBtn">Filtrar</button>
   <button id="resetBtn">Restablecer</button>
 </div>
 
-<div class="dashboard">
-  <div class="dashboard-item">
-    <h3>Total Reclamos</h3>
-    <p id="totalReclamos" class="numero-dashboard">0</p>
+<div class="main-container">
+  
+  <div class="column">
+    <div class="dashboard-item" id="card-reclamos">
+      <h3>Reclamos Hoy</h3>
+      <p id="totalReclamos" class="numero-dashboard">0</p>
+      <div class="indicador-mes">Mensual: <span id="mesReclamos">0</span></div>
+    </div>
+    <div class="chart-item">
+      <h3>Evolución Mensual Reclamos</h3>
+      <canvas id="reclamosChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <h3>Reclamos por Marca</h3>
+      <canvas id="marcasChart"></canvas>
+    </div>
   </div>
-  <div class="dashboard-item">
-    <h3>Retenidas Totales</h3>
-    <p id="totalRetenidas" class="numero-dashboard">0</p>
-  </div>
-  <div class="dashboard-item chart-container">
-    <h3>Reclamos con/sin riesgo</h3>
-    <canvas id="riesgoChart"></canvas>
-  </div>
-</div>
 
-<div class="charts">
-  <div class="chart-item">
-    <h3>Reclamos de Clientes</h3>
-    <canvas id="reclamosChart"></canvas>
+  <div class="column">
+    <div class="dashboard-item" id="card-retenidas">
+      <h3>Retenidas Hoy</h3>
+      <p id="totalRetenidas" class="numero-dashboard">0</p>
+      <div class="indicador-mes">.<span id="mesRetenidas">  </span></div>
+    </div>
+    <div class="chart-item">
+      <h3>Evolución Unidades Retenidas</h3>
+      <canvas id="unidadesRetenidasChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <h3>Evolución Retenciones Masivas</h3>
+      <canvas id="retencionesMasivasChart"></canvas>
+    </div>
   </div>
-  <div class="chart-item">
-    <h3>% Bueno Directo Diario</h3>
-    <canvas id="buenoDirectoChart"></canvas>
-  </div>
-  <div class="chart-item">
-    <h3>Retenciones Masivas</h3>
-    <canvas id="retencionesMasivasChart"></canvas>
-  </div>
-  <div class="chart-item">
-    <h3>Unidades Retenidas</h3>
-    <canvas id="unidadesRetenidasChart"></canvas>
-  </div>
-  <div class="chart-item">
-    <h3>Reclamos por Marca</h3>
-    <canvas id="marcasChart"></canvas>
-  </div>
-</div>
 
-<div class="comentarios-table" style="display:none;">
-  <table id="comentariosTable">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Comentarios 1</th>
-        <th>Comentarios 2</th>
-        <th>Fecha</th>
-        <th>Reclamos</th>
-        <th>Marca</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+  <div class="column">
+    <div class="dashboard-item" id="card-bd">
+      <h3>BD Hoy</h3>
+      <p id="totalBD" class="numero-dashboard">0%</p>
+      <div class="indicador-mes">Prom. Mes: <span id="mesBD">0%</span></div>
+    </div>
+    <div class="chart-item">
+      <h3>Evolución % Bueno Directo Diario</h3>
+      <canvas id="buenoDirectoChart"></canvas>
+    </div>
+  </div>
 
-<div class="table-container" style="display:none;">
-  <table id="historialTable">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Reclamos de Clientes</th>
-        <th>MARCA</th>
-        <th>Comentarios_Reclamo1</th>
-        <th>Comentarios_Reclamo2</th>
-        <th>% de Bueno Directo Diario</th>
-        <th>Cantidad de Unidades RETENIDAS PISO</th>
-        <th>Cantidad de Retenciones MASIVAS</th>
-        <th>RETENIDAS TOTALES</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
 </div>
 
 <script src="calidad.js"></script>
 </body>
 </html>
-
-
-
