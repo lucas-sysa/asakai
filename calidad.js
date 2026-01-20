@@ -1,7 +1,21 @@
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbznAa54CLIDbTYLMbznKOs-aw9_rEGeCDZZ1qOXxevXnFa6h61wG24UhlXyjMIdt8I/exec";
 
 let dataGlobal = null;
-let charts = {}; // Objeto para guardar todas las instancias de Chart.js
+let charts = {}; 
+
+// Esperar a que el HTML cargue completamente
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+
+    // Asignar eventos a los botones
+    document.getElementById('filterBtn').onclick = updateDashboard;
+    document.getElementById('resetBtn').onclick = () => {
+        document.getElementById('daySelect').value = "";
+        document.getElementById('monthSelect').value = "";
+        document.getElementById('yearSelect').value = "";
+        updateDashboard();
+    };
+});
 
 async function loadData() {
     try {
@@ -20,18 +34,23 @@ async function loadData() {
 }
 
 function populateFilters() {
+    if (!dataGlobal.Reclamos.length) return;
+    
     const fechas = dataGlobal.Reclamos.map(r => new Date(r.Fecha)).filter(d => !isNaN(d));
     const days = [...new Set(fechas.map(d => d.getDate()))].sort((a,b)=>a-b);
     const months = [...new Set(fechas.map(d => d.getMonth()+1))].sort((a,b)=>a-b);
     const years = [...new Set(fechas.map(d => d.getFullYear()))].sort((a,b)=>a-b);
 
-    const fill = (el, vals) => {
+    const fill = (id, vals) => {
+        const el = document.getElementById(id);
+        if (!el) return;
         el.innerHTML = '<option value="">Todos</option>';
         vals.forEach(v => el.innerHTML += `<option value="${v}">${v}</option>`);
     };
-    fill(document.getElementById('daySelect'), days);
-    fill(document.getElementById('monthSelect'), months);
-    fill(document.getElementById('yearSelect'), years);
+    
+    fill('daySelect', days);
+    fill('monthSelect', months);
+    fill('yearSelect', years);
 }
 
 function getFiltered(arr) {
@@ -40,28 +59,32 @@ function getFiltered(arr) {
     const y = document.getElementById('yearSelect').value;
     return arr.filter(r => {
         const date = new Date(r.Fecha);
-        return (!d || date.getDate() == d) && (!m || (date.getMonth()+1) == m) && (!y || date.getFullYear() == y);
+        return (!d || date.getDate() == d) && 
+               (!m || (date.getMonth()+1) == m) && 
+               (!y || date.getFullYear() == y);
     });
 }
 
 function updateDashboard() {
+    if (!dataGlobal) return;
+
     const fRec = getFiltered(dataGlobal.Reclamos);
     const fRet = getFiltered(dataGlobal.Retenciones);
     const fBue = getFiltered(dataGlobal.BuenoDirecto);
 
-    // --- LOGICA RECLAMOS ---
+    // --- RECLAMOS ---
     const hoyRec = fRec.length > 0 ? Number(fRec[fRec.length-1]["Reclamos de Clientes"]) : 0;
     const mesRec = fRec.reduce((acc, r) => acc + (Number(r["Reclamos de Clientes"]) || 0), 0);
     document.getElementById('totalReclamos').textContent = hoyRec;
     document.getElementById('mesReclamos').textContent = mesRec;
     document.getElementById('card-reclamos').className = `dashboard-item ${hoyRec > 0 ? 'bg-rojo' : 'bg-verde'}`;
 
-    // --- LOGICA RETENIDAS ---
+    // --- RETENIDAS ---
     const hoyRet = fRet.length > 0 ? Number(fRet[fRet.length-1]["RETENIDAS TOTALES"]) : 0;
     document.getElementById('totalRetenidas').textContent = hoyRet;
     document.getElementById('card-retenidas').className = `dashboard-item ${hoyRet > 0 ? 'bg-rojo' : 'bg-verde'}`;
 
-    // --- LOGICA BD ---
+    // --- BUENO DIRECTO ---
     const hoyBD = fBue.length > 0 ? (Number(fBue[fBue.length-1]["% de Bueno Directo Diario"]) * 100) : 0;
     const promBD = fBue.length > 0 ? (fBue.reduce((acc, r) => acc + (Number(r["% de Bueno Directo Diario"]) || 0), 0) / fBue.length) * 100 : 0;
     document.getElementById('totalBD').textContent = hoyBD.toFixed(1) + "%";
@@ -72,32 +95,41 @@ function updateDashboard() {
 }
 
 function renderCharts(fRec, fRet, fBue) {
-    const commonX = { ticks: { maxRotation: 90, minRotation: 90 } };
+    const commonX = { ticks: { maxRotation: 45, minRotation: 45 } };
     const dateLabels = (arr) => arr.map(r => {
         const d = new Date(r.Fecha);
-        return `${d.getDate()}/${d.getMonth()+1}`;
+        return isNaN(d) ? 'S/D' : `${d.getDate()}/${d.getMonth()+1}`;
     });
 
     const createOrUpdate = (id, type, data, options = {}) => {
+        const ctx = document.getElementById(id);
+        if (!ctx) return; // Si el canvas no existe, no hace nada y evita el error
+        
         if (charts[id]) charts[id].destroy();
-        charts[id] = new Chart(document.getElementById(id), { type, data, options: { responsive: true, ...options } });
+        charts[id] = new Chart(ctx, { 
+            type, 
+            data, 
+            options: { responsive: true, ...options } 
+        });
     };
 
-    // Columna 1
+    // Gráficos Reclamos
     createOrUpdate('reclamosChart', 'bar', {
         labels: dateLabels(fRec),
         datasets: [{ label: 'Reclamos', data: fRec.map(r => r["Reclamos de Clientes"]), backgroundColor: '#3498db' }]
     }, { scales: { x: commonX } });
 
-
     const marcaData = {};
-    fRec.forEach(r => { const m = r.MARCA || 'N/A'; marcaData[m] = (marcaData[m] || 0) + Number(r["Reclamos de Clientes"]); });
+    fRec.forEach(r => { 
+        const m = r.MARCA || 'N/A'; 
+        marcaData[m] = (marcaData[m] || 0) + Number(r["Reclamos de Clientes"]); 
+    });
     createOrUpdate('marcasChart', 'bar', {
         labels: Object.keys(marcaData),
         datasets: [{ label: 'Por Marca', data: Object.values(marcaData), backgroundColor: '#9b59b6' }]
     }, { indexAxis: 'y' });
 
-    // Columna 2
+    // Gráficos Retenidas
     createOrUpdate('unidadesRetenidasChart', 'bar', {
         labels: dateLabels(fRet),
         datasets: [{ label: 'U. Retenidas', data: fRet.map(r => r["Cantidad de Unidades RETENIDAS PISO"]), backgroundColor: '#e67e22' }]
@@ -108,7 +140,7 @@ function renderCharts(fRec, fRet, fBue) {
         datasets: [{ label: 'Ret. Masivas', data: fRet.map(r => r["Cantidad de Retenciones MASIVAS"]), backgroundColor: '#f1c40f' }]
     }, { scales: { x: commonX } });
 
-    // Columna 3
+    // Gráfico Bueno Directo
     createOrUpdate('buenoDirectoChart', 'line', {
         labels: dateLabels(fBue),
         datasets: [
@@ -117,14 +149,3 @@ function renderCharts(fRec, fRet, fBue) {
         ]
     }, { scales: { x: commonX, y: { min: 0, max: 100 } } });
 }
-
-document.getElementById('filterBtn').onclick = updateDashboard;
-document.getElementById('resetBtn').onclick = () => {
-    document.getElementById('daySelect').value = "";
-    document.getElementById('monthSelect').value = "";
-    document.getElementById('yearSelect').value = "";
-    updateDashboard();
-};
-
-loadData();
-
